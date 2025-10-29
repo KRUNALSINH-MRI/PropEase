@@ -38,5 +38,6 @@ namespace PropEase.Models
         // Date Added
         [Display(Name = "Listed On")]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
+ 
     }
 }
