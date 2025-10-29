@@ -10,7 +10,7 @@ namespace PropEase.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
 
-        //public DbSet<Property> Properties { get; set; }
+        public DbSet<Models.Property> Properties { get; set; }
     }
 }
 
