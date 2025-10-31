@@ -13,7 +13,7 @@
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h2>Welcome to PropEase</h2>
-            <h5>Create a new account</h5>
+            <h5>Create a New Account</h5>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
@@ -44,6 +44,10 @@
 
 
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <p class="signup-text">
+                Already have an account?
+                <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Login</a>
+            </p>
         </form>
     </div>
     <div class="col-md-6 col-md-offset-2">
@@ -83,4 +87,14 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        @if (TempData["RegistrationSuccess"] != null)
+        {
+                <text>
+                    alert("Registration successful! You can now log in.");
+                    window.location.href = "/Identity/Account/Login";
+                </text>
+        }
+    </script>
 }
+

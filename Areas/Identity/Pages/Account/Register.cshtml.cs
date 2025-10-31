@@ -154,15 +154,15 @@ namespace PropEase.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    if (result.Succeeded)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        _logger.LogInformation("User created a new account with password.");
+
+                        // Instead of redirecting to RegisterConfirmation, return a script alert and redirect
+                        TempData["RegistrationSuccess"] = true;
+                        return RedirectToPage("Register"); // reloads page so we can show alert
                     }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
+
                 }
                 foreach (var error in result.Errors)
                 {

@@ -126,7 +126,7 @@ namespace PropEase.Areas.Identity.Pages.Account
 
                 if (user != null)
                 {
-                    var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                    var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User logged in.");

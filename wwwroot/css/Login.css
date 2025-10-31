@@ -24,6 +24,19 @@ body {
     border-radius: 15px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     width: 400px;
+    animation: fadeIn 0.7s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
     /* Heading */
@@ -93,16 +106,26 @@ label {
     padding: 12px;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease transform 0.2s ease;
 }
 
     #login-submit:hover {
         background: linear-gradient(to right, #5c6bc0, #7e57c2);
+        transform: translateY(-2px);
     }
 
 /* Links under the form */
-#account a {
+/* Sign-up redirect text */
+    .signup-text {
+        text-align: center;
+        margin-top: 0px;
+        font-size: 0.95rem;
+        color: #555;
+    }
+
+    .signup-text a {
     color: #3f51b5;
+        font-weight: 600;
     text-decoration: none;
     transition: color 0.3s ease;
 }
