@@ -33,7 +33,7 @@ namespace PropEase.Models
         // 🔗 Relationship to User (Owner)
         [ForeignKey("Owner")]
         public string? OwnerId { get; set; }
-        public IdentityUser? Owner { get; set; }
+        public ApplicationUser? Owner { get; set; }
 
         // Date Added
         [Display(Name = "Listed On")]

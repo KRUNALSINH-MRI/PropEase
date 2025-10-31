@@ -1,0 +1,126 @@
+﻿/* Page background gradient */
+body {
+    background: linear-gradient(135deg, #673ab7, #3f51b5);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Center form container */
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Login form card */
+#account {
+    background-color: #fff;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+
+    /* Heading */
+    #account h4 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: 600;
+        color: #333;
+        font-weight: bold;
+    }
+
+    #account h5 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: 600;
+        color: #333;
+    }
+
+/* Input fields */
+.form-floating {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-control {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 15px;
+    width: 100%;
+    transition: border-color 0.3s ease;
+}
+
+    .form-control:focus {
+        border-color: #673ab7;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(103, 58, 183, 0.2);
+    }
+
+/* Labels */
+label {
+    font-weight: 500;
+    color: #444;
+}
+
+/* Remember me checkbox */
+.checkbox {
+    margin-bottom: 15px;
+}
+
+.form-check-input {
+    margin-right: 8px;
+}
+
+/* Validation messages */
+.text-danger {
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Login button */
+#login-submit {
+    background: linear-gradient(to right, #3f51b5, #673ab7);
+    border: none;
+    color: white;
+    font-weight: 500;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+    #login-submit:hover {
+        background: linear-gradient(to right, #5c6bc0, #7e57c2);
+    }
+
+/* Links under the form */
+#account a {
+    color: #3f51b5;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+    #account a:hover {
+        color: #673ab7;
+        text-decoration: underline;
+    }
+
+/* Secondary section (external logins) */
+.col-md-6 {
+    display: none; /* hide external login section for clean layout */
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    #account {
+        width: 90%;
+        padding: 25px 20px;
+    }
+}

@@ -12,8 +12,8 @@ using PropEase.Data;
 namespace PropEase.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251029090037_AddPropertyTable")]
-    partial class AddPropertyTable
+    [Migration("20251030084025_RemovedUnecessaryFields")]
+    partial class RemovedUnecessaryFields
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
