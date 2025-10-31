@@ -24,23 +24,36 @@ body {
     border-radius: 15px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     width: 400px;
+    animation: fadeIn 0.7s ease-in-out;
 }
 
-    /* Heading */
-    #account h4 {
-        text-align: center;
-        margin-bottom: 25px;
-        font-weight: 600;
-        color: #333;
-        font-weight: bold;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-25px);
     }
 
-    #account h5 {
-        text-align: center;
-        margin-bottom: 25px;
-        font-weight: 600;
-        color: #333;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
+}
+
+/* Heading */
+#account h4 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 600;
+    color: #333;
+    font-weight: bold;
+}
+
+#account h5 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 600;
+    color: #333;
+}
 
 /* Input fields */
 .form-floating {
@@ -93,23 +106,28 @@ label {
     padding: 12px;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease transform 0.2s ease;
 }
 
     #login-submit:hover {
         background: linear-gradient(to right, #5c6bc0, #7e57c2);
+        transform: translateY(-2px);
     }
 
 /* Links under the form */
-#account a {
-    color: #3f51b5;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
+/* Sign-up redirect text */
+    .signup-text {
+        text-align: center;
+        margin-top: 0px;
+        font-size: 0.95rem;
+        color: #555;
+    }
 
-    #account a:hover {
-        color: #673ab7;
-        text-decoration: underline;
+    .signup-text a {
+        color: #3f51b5;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.3s ease;
     }
 
 /* Secondary section (external logins) */
