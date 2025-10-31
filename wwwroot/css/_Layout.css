@@ -1,0 +1,77 @@
+﻿/* ==============================
+   NAVBAR STYLING FOR _Layout.cshtml
+   ============================== */
+
+/* Navbar container */
+.navbar {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 10px 40px;
+    transition: all 0.3s ease;
+}
+
+/* Navbar brand (logo/title) */
+/*.navbar-brand {
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: #ffffff !important;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+
+    .navbar-brand:hover {
+        color: #ffeb3b !important;
+    }*/
+
+/* Navbar links */
+.navbar-nav .nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+    margin-left: 25px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+    /* Underline animation on hover */
+    .navbar-nav .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 2px;
+        background: #ffeb3b;
+        transition: width 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover::after {
+        width: 100%;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #ffeb3b !important;
+        transform: scale(1.05);
+    }
+
+/* Logout button (in _LoginPartial) */
+#logout {
+    color: #ffffff !important;
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    transition: color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+    #logout:hover {
+        color: #ffeb3b !important;
+        transform: scale(1.05);
+    }
+
+/* For mobile view (navbar collapse) */
+@media (max-width: 991px) {
+    .navbar-nav .nav-link {
+        margin-left: 0;
+        padding: 10px 0;
+    }
+}
