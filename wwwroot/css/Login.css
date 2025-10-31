@@ -39,21 +39,21 @@ body {
     }
 }
 
-/* Heading */
-#account h4 {
-    text-align: center;
-    margin-bottom: 25px;
-    font-weight: 600;
-    color: #333;
-    font-weight: bold;
-}
+    /* Heading */
+    #account h4 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: 600;
+        color: #333;
+        font-weight: bold;
+    }
 
-#account h5 {
-    text-align: center;
-    margin-bottom: 25px;
-    font-weight: 600;
-    color: #333;
-}
+    #account h5 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: 600;
+        color: #333;
+    }
 
 /* Input fields */
 .form-floating {
@@ -124,10 +124,15 @@ label {
     }
 
     .signup-text a {
-        color: #3f51b5;
+    color: #3f51b5;
         font-weight: 600;
-        text-decoration: none;
-        transition: color 0.3s ease;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+    #account a:hover {
+        color: #673ab7;
+        text-decoration: underline;
     }
 
 /* Secondary section (external logins) */
