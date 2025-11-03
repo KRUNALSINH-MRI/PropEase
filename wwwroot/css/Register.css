@@ -2,19 +2,18 @@
 body {
     background: linear-gradient(135deg, #673ab7, #3f51b5);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    height: 100vh;
+    min-height: 100vh; /* instead of height: 100vh */
     margin: 0;
+    padding: 0;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
 }
 
 /* Center form container */
 .row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+    justify-content: center; /* keep Bootstrap’s flex layout */
+    margin: 0;
+    padding: 20px;
 }
 
 /* Registration form card */
@@ -23,8 +22,11 @@ body {
     padding: 40px 30px;
     border-radius: 15px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    width: 100%;
+    max-width: 420px;
+    margin: 60px auto; /* centers the card properly */
     animation: fadeIn 0.7s ease-in-out;
+    transition: all 0.3s ease;
 }
 
 @keyframes fadeIn {
@@ -39,20 +41,22 @@ body {
     }
 }
 
-    /* Heading */
-    #registerForm h2 {
-        text-align: center;
-        margin-bottom: 25px;
-        font-weight: 600;
-        color: #333;
-    }
+/* Headings */
+#registerForm h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: #333;
+}
 
-    #registerForm h5 {
-        text-align: center;
-        margin-bottom: 25px;
-        font-weight: 600;
-        color: #333;
-    }
+#registerForm h5 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+}
 
 /* Input fields */
 .form-floating {
@@ -96,20 +100,21 @@ label {
     padding: 12px;
     border-radius: 8px;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
 }
 
     #registerSubmit:hover {
         background: linear-gradient(to right, #5c6bc0, #7e57c2);
+        transform: translateY(-2px);
     }
 
 /* Sign-up redirect text */
-    .signup-text {
-        text-align: center;
-        margin-top: 20px;
-        font-size: 0.95rem;
-        color: #555;
-    }
+.signup-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #555;
+}
 
     .signup-text a {
         color: #3f51b5;
@@ -117,15 +122,47 @@ label {
         text-decoration: none;
         transition: color 0.3s ease;
     }
-/* Secondary section (external logins) */
+
+        .signup-text a:hover {
+            color: #673ab7;
+            text-decoration: underline;
+        }
+
+/* Hide secondary (external) login section */
 .col-md-6 {
-    display: none; /* hide external login section for clean layout */
+    display: none;
 }
 
-/* Responsive adjustments */
-@media (max-width: 480px) {
+/* Tablet view */
+@media (max-width: 768px) {
+    body {
+        padding-top: 40px;
+    }
+
     #registerForm {
         width: 90%;
-        padding: 25px 20px;
+        padding: 30px 20px;
+    }
+
+        #registerForm h2 {
+            font-size: 1.4rem;
+        }
+}
+
+/* Mobile view */
+@media (max-width: 480px) {
+    #registerForm {
+        width: 95%;
+        padding: 20px 15px;
+    }
+
+    .form-control {
+        font-size: 0.95rem;
+        padding: 10px;
+    }
+
+    #registerSubmit {
+        font-size: 1rem;
+        padding: 10px;
     }
 }
