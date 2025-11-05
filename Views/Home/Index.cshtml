@@ -1,4 +1,10 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using PropEase.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@{
     ViewData["Title"] = "Home";
 }
 
@@ -137,10 +143,64 @@
 </section>
 
 
+@{
+    var currentUser = await UserManager.GetUserAsync(User);
+    var roles = currentUser != null ? await UserManager.GetRolesAsync(currentUser) : new List<string>();
+}
+
+@using Microsoft.AspNetCore.Identity
+@using PropEase.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    // var currentUser = await UserManager.GetUserAsync(User);
+    // var roles = currentUser != null ? await UserManager.GetRolesAsync(currentUser) : new List<string>();
+}
+
 <section class="cta-section text-center text-white">
     <div class="container">
         <h2>Are you a Property Owner?</h2>
         <p>List your property for FREE and connect with verified buyers and tenants.</p>
-        <a href="/Properties/Create" class="btn btn-cta">Post Your Property</a>
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            if (roles.Contains("Owner") || roles.Contains("Admin"))
+            {
+                <!-- ✅ Owner or Admin can post -->
+                <a asp-controller="Properties" asp-action="Create" class="btn btn-cta">
+                    Post Your Property
+                </a>
+            }
+            else
+            {
+                <!-- 🚫 Client logged in -->
+                <button type="button" class="btn btn-cta" id="noAccessBtn">
+                    Post Your Property
+                </button>
+            }
+        }
+        else
+        {
+            <!-- 🟡 Not logged in -->
+            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-cta">
+                Post Your Property
+            </a>
+        }
     </div>
 </section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById("noAccessBtn")?.addEventListener("click", function () {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Access Denied',
+                text: 'You don’t have access to post properties. This feature is available only for property owners.',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
+}
+
