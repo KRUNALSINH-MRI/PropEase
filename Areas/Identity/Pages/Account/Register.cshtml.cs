@@ -27,6 +27,7 @@ namespace PropEase.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
@@ -35,6 +36,7 @@ namespace PropEase.Areas.Identity.Pages.Account
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
+            RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -42,6 +44,7 @@ namespace PropEase.Areas.Identity.Pages.Account
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
+            _roleManager = roleManager; // ✅ Added
             _logger = logger;
             _emailSender = emailSender;
         }
@@ -58,6 +61,9 @@ namespace PropEase.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string ReturnUrl { get; set; }
+        [Required]
+        public string Role { get; set; }
+
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -75,6 +81,11 @@ namespace PropEase.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            /// 
+            [Required]
+            [Display(Name = "Register As")]
+            public string Role { get; set; }
+
             [Required]
             [Display(Name = "Full Name")]
             [StringLength(100)]
@@ -137,6 +148,12 @@ namespace PropEase.Areas.Identity.Pages.Account
                 user.PhoneNumber = Input.PhoneNumber;
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
+                if (result.Succeeded)
+{
+    await _userManager.AddToRoleAsync(user, Input.Role);
+}
+
 
                 if (result.Succeeded)
                 {
