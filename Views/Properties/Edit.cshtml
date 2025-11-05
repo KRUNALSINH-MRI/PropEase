@@ -1,69 +1,165 @@
 ﻿@model PropEase.Models.Property
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Property";
 }
 
-<h1>Edit</h1>
+<h1>Edit Property</h1>
 
 <h4>Property</h4>
 <hr />
+
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div class="col-md-6">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+
+            <!-- Basic Details -->
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="PropertyType" class="control-label"></label>
+                <select asp-for="PropertyType" class="form-control">
+                    <option value="">-- Select Property Type --</option>
+                    <option value="Apartment" selected="@(Model.PropertyType == "Apartment")">Apartment</option>
+                    <option value="Duplex" selected="@(Model.PropertyType == "Duplex")">Duplex</option>
+                    <option value="Farm House" selected="@(Model.PropertyType == "Farm House")">Farm House</option>
+                    <option value="Villa" selected="@(Model.PropertyType == "Villa")">Villa</option>
+                    <option value="Independent House" selected="@(Model.PropertyType == "Independent House")">Independent House</option>
+                </select>
+
+                <span asp-validation-for="PropertyType" class="text-danger"></span>
+            </div>
+
+
+            <!-- Location Info -->
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ZipCode" class="control-label"></label>
+                <input asp-for="ZipCode" class="form-control" />
+                <span asp-validation-for="ZipCode" class="text-danger"></span>
+            </div>
+
+            <!-- Property Specifications -->
+            <div class="form-group">
+                <label asp-for="BHK" class="control-label"></label>
+                <select asp-for="BHK" class="form-control">
+                    <option value="">-- Select BHK --</option>
+                    <option value="0" selected="@(Model.BHK == 0)">1 RK</option>
+                    <option value="1" selected="@(Model.BHK == 1)">1 BHK</option>
+                    <option value="2" selected="@(Model.BHK == 2)">2 BHK</option>
+                    <option value="3" selected="@(Model.BHK == 3)">3 BHK</option>
+                    <option value="4" selected="@(Model.BHK == 4)">4 BHK</option>
+                    <option value="5" selected="@(Model.BHK == 5)">5 BHK</option>
+                </select>
+                <span asp-validation-for="BHK" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Area" class="control-label"></label>
+                <input asp-for="Area" class="form-control" />
+                <span asp-validation-for="Area" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FurnishType" class="control-label"></label>
+                <select asp-for="FurnishType" class="form-control">
+                    <option value="">-- Select Furnish Type --</option>
+                    <option value="Furnished">Furnished</option>
+                    <option value="Semi-Furnished">Semi-Furnished</option>
+                    <option value="Unfurnished">Unfurnished</option>
+                </select>
+                <span asp-validation-for="FurnishType" class="text-danger"></span>
+            </div>
+
+
+            <!-- Pricing -->
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" />
-                <span asp-validation-for="Location" class="text-danger"></span>
+                <label asp-for="Type" class="control-label"></label>
+                <select asp-for="Type" class="form-control">
+                    <option value="Sale">Sale</option>
+                    <option value="Rent">Rent</option>
+                </select>
+                <span asp-validation-for="Type" class="text-danger"></span>
             </div>
+
+            <!-- Media -->
             <div class="form-group">
-                <label asp-for="PropertyType" class="control-label"></label>
-                <input asp-for="PropertyType" class="form-control" />
-                <span asp-validation-for="PropertyType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
+                <label class="control-label">Property Image</label>
+
+                <!-- Option 1: Upload an image file -->
+                <input type="file" name="ImageFile" class="form-control mb-2" accept="image/*" />
+
+                <p class="text-muted mb-2 text-center">OR</p>
+
+                <!-- Option 2: Enter image URL manually -->
+                <input asp-for="ImageUrl" class="form-control" placeholder="Enter image URL" />
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
+
+                <!-- Show current image (only in Edit page) -->
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <div class="mt-3 text-center">
+                        <img src="@Model.ImageUrl" alt="Property Image" style="max-width: 200px; border-radius: 10px;" />
+                    </div>
+                }
             </div>
+
+
+            <!-- Metadata -->
             <div class="form-group">
-                <label asp-for="OwnerId" class="control-label"></label>
-                <select asp-for="OwnerId" class="form-control" asp-items="ViewBag.OwnerId"></select>
-                <span asp-validation-for="OwnerId" class="text-danger"></span>
+                <label asp-for="PostedOn" class="control-label"></label>
+                <input asp-for="PostedOn" class="form-control" readonly />
+                <span asp-validation-for="PostedOn" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+
+          
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

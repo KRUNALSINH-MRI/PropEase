@@ -45,12 +45,15 @@
             <div class="form-floating mb-3">
                 <select asp-for="Input.Role" class="form-select">
                     <option value="">-- Select Role --</option>
+                    <option value="Admin">Admin</option>
                     <option value="Owner">Owner</option>
                     <option value="Client">Client</option>
                 </select>
-                <label asp-for="Input.Role"></label>
+                <label asp-for="Input.Role">Role</label>
                 <span asp-validation-for="Input.Role" class="text-danger"></span>
             </div>
+
+
 
 
 

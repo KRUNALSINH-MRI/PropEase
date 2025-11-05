@@ -1,67 +1,191 @@
 ﻿@model PropEase.Models.Property
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Property";
 }
 
-<h1>Create</h1>
+<h1>Create Property</h1>
 
-<h4>Property</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-md-8">
+        <form asp-action="Create" enctype="multipart/form-data">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+
+            <!-- 1. Basic Details -->
+            <h4>Basic Details</h4>
+            <div class="form-group mb-3">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
+
+            <div class="form-group mb-3">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" />
-                <span asp-validation-for="Location" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="PropertyType" class="control-label"></label>
-                <input asp-for="PropertyType" class="form-control" />
+                <select asp-for="PropertyType" class="form-control">
+                    <option value="">-- Select Property Type --</option>
+                    <option>Apartment</option>
+                    <option>Duplex</option>
+                    <option>Farm House</option>
+                    <option>Villa</option>
+                    <option>Independent House</option>
+                </select>
                 <span asp-validation-for="PropertyType" class="text-danger"></span>
             </div>
+
+
+            <!-- 2. Location Info -->
+            <h4>Location Info</h4>
+            <div class="form-group mb-3">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="State" class="control-label"></label>
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ZipCode" class="control-label"></label>
+                <input asp-for="ZipCode" class="form-control" />
+                <span asp-validation-for="ZipCode" class="text-danger"></span>
+            </div>
+
+            <!-- 3. Property Specifications -->
+            <h4>Property Specifications</h4>
             <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
+                <label asp-for="BHK" class="control-label"></label>
+                <select asp-for="BHK" class="form-control">
+                    <option value="">-- Select BHK --</option>
+                    <option value="0">1 RK</option>
+                    <option value="1">1 BHK</option>
+                    <option value="2">2 BHK</option>
+                    <option value="3">3 BHK</option>
+                    <option value="4">4 BHK</option>
+                    <option value="5">5 BHK</option>
+                </select>
+                <span asp-validation-for="BHK" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group mb-3">
+                <label asp-for="Area" class="control-label"></label>
+                <input asp-for="Area" class="form-control" placeholder="e.g., 1500 sq.ft" />
+                <span asp-validation-for="Area" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="FurnishType" class="control-label"></label>
+                <select asp-for="FurnishType" class="form-control">
+                    <option value="">-- Select Furnish Type --</option>
+                    <option>Fully Furnished</option>
+                    <option>Semi Furnished</option>
+                    <option>Unfurnished</option>
+                </select>
+                <span asp-validation-for="FurnishType" class="text-danger"></span>
+            </div>
+
+            <!-- 4. Pricing -->
+            <h4>Pricing</h4>
+            <div class="form-group mb-3">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" placeholder="e.g., 25000 or 5000000" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Type" class="control-label"></label>
+                <select asp-for="Type" class="form-control">
+                    <option value="">-- Select Type --</option>
+                    <option>Rent</option>
+                    <option>Sale</option>
+                </select>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+
+            <!-- 5. Media -->
+            <h4>Media</h4>
+            <div class="form-group">
+                <label>Upload Image</label>
+                <input type="file" name="ImageFile" id="ImageFile" class="form-control" accept="image/*" onchange="handleImageSelection()" />
+            </div>
+
+            <div class="form-group">
+                <label>OR Image URL</label>
+                <input asp-for="ImageUrl" class="form-control" id="ImageUrl" placeholder="Enter image URL or upload a file" oninput="handleImageSelection()" />
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
-            <div class="form-group">
+
+            <script>
+                function handleImageSelection() {
+                    const fileInput = document.getElementById("ImageFile");
+                    const urlInput = document.getElementById("ImageUrl");
+
+                    if (fileInput.files.length > 0) {
+                        urlInput.disabled = true;
+                        urlInput.value = "";
+                    } else if (urlInput.value.trim() !== "") {
+                        fileInput.disabled = true;
+                    } else {
+                        fileInput.disabled = false;
+                        urlInput.disabled = false;
+                    }
+                }
+
+                document.querySelector("form").addEventListener("submit", function (e) {
+                    const fileInput = document.getElementById("ImageFile");
+                    const urlInput = document.getElementById("ImageUrl");
+
+                    if (fileInput.files.length === 0 && urlInput.value.trim() === "") {
+                        e.preventDefault();
+                        alert("Please upload an image or provide an image URL.");
+                    }
+                });
+            </script>
+
+
+
+
+            <!-- 6. Metadata -->
+            <h4>Metadata</h4>
+            <div class="form-group mb-3">
                 <label asp-for="OwnerId" class="control-label"></label>
-                <select asp-for="OwnerId" class ="form-control" asp-items="ViewBag.OwnerId"></select>
+                <input asp-for="OwnerId" class="form-control" placeholder="User ID or leave blank" />
+                <span asp-validation-for="OwnerId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+
+            <div class="form-group mb-3">
+                <label asp-for="PostedOn" class="control-label"></label>
+                <input type="hidden" asp-for="PostedOn" value="@DateTime.Now" />
+                <span asp-validation-for="PostedOn" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary" /> |
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

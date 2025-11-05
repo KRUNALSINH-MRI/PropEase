@@ -1,66 +1,83 @@
 ﻿@model PropEase.Models.Property
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Property Details";
 }
 
-<h1>Details</h1>
+<h1>Property Details</h1>
 
 <div>
     <h4>Property</h4>
     <hr />
+
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
+
+        <!-- Basic Details -->
+        <dt class="col-sm-2">Title</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Title)</dd>
+
+        <dt class="col-sm-2">Description</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Description)</dd>
+
+        <dt class="col-sm-2">Property Type</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.PropertyType)</dd>
+
+        <!-- Location Info -->
+        <dt class="col-sm-2">Address</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Address)</dd>
+
+        <dt class="col-sm-2">City</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.City)</dd>
+
+        <dt class="col-sm-2">State</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.State)</dd>
+
+        <dt class="col-sm-2">Zip Code</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.ZipCode)</dd>
+
+        <!-- Property Specifications -->
+        <dt class="col-sm-2">BHK</dt>
+        <dd class="col-sm-10">@((Model.BHK == 0) ? "1 RK" : $"{Model.BHK} BHK")</dd>
+
+
+        <dt class="col-sm-2">Area (sq.ft)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Area)</dd>
+
+        <dt class="col-sm-2">Furnish Type</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.FurnishType)</dd>
+
+        <!-- Pricing -->
+        <dt class="col-sm-2">Price (₹)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Price)</dd>
+
+        <dt class="col-sm-2">Type</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Type)</dd>
+
+        <!-- Media -->
+        <dt class="col-sm-2">Image</dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="Property Image" class="img-fluid rounded" style="max-width:400px;" />
+            }
+            else
+            {
+                <span>No image available</span>
+            }
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Location)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PropertyType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PropertyType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Owner)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Owner.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
+
+        <!-- Metadata -->
+        <dt class="col-sm-2">Posted On</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.PostedOn)</dd>
+
+        <dt class="col-sm-2">Owner</dt>
+        <dd class="col-sm-10">@Model.Owner?.Email</dd>
+
+
     </dl>
 </div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a> |
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>

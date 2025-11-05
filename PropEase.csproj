@@ -26,6 +26,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\css\NewFolder1\" />
     <Folder Include="wwwroot\css\NewFolder\" />
+    <Folder Include="wwwroot\images\properties\" />
     <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 

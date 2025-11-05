@@ -1,21 +1,25 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PropEase.Data;
 using PropEase.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PropEase.Controllers
 {
     public class PropertiesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PropertiesController(ApplicationDbContext context)
+
+        public PropertiesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Properties
@@ -51,32 +55,91 @@ namespace PropEase.Controllers
         // POST: Properties/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Price,Location,PropertyType,ImageUrl,OwnerId,CreatedDate")] Property property)
+        public async Task<IActionResult> Create(Property property, IFormFile? ImageFile)
         {
+            // Manual validation: Must provide either file or URL
+            if ((ImageFile == null || ImageFile.Length == 0) && string.IsNullOrWhiteSpace(property.ImageUrl))
+            {
+                ModelState.AddModelError("ImageUrl", "Please upload an image or provide an image URL.");
+                return View(property);
+            }
+
             if (ModelState.IsValid)
             {
+                // If file is uploaded, save it
+                if (ImageFile != null && ImageFile.Length > 0)
+                {
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/properties");
+                    Directory.CreateDirectory(uploadsFolder); // ensures folder exists
+
+                    var fileName = Path.GetFileName(ImageFile.FileName);
+                    var filePath = Path.Combine(uploadsFolder, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await ImageFile.CopyToAsync(stream);
+                    }
+
+                    property.ImageUrl = "/images/properties/" + fileName; // save relative path
+                }
+
+                property.PostedOn = DateTime.Now;
+                var userId = _userManager.GetUserId(User);
+                property.OwnerId = userId;
+
                 _context.Add(property);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["OwnerId"] = new SelectList(_context.Users, "Id", "Id", property.OwnerId);
             return View(property);
         }
+
+
+
+
 
         // GET: Properties/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Property property, IFormFile ImageFile)
         {
-            if (id == null)
+            if (id != property.Id)
                 return NotFound();
 
-            var property = await _context.Properties.FindAsync(id);
-            if (property == null)
-                return NotFound();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (ImageFile != null && ImageFile.Length > 0)
+                    {
+                        var fileName = Path.GetFileName(ImageFile.FileName);
+                        var filePath = Path.Combine("wwwroot/images/properties", fileName);
 
-            ViewData["OwnerId"] = new SelectList(_context.Users, "Id", "Id", property.OwnerId);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await ImageFile.CopyToAsync(stream);
+                        }
+
+                        property.ImageUrl = "/images/properties/" + fileName;
+                    }
+
+                    _context.Update(property);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.Properties.Any(e => e.Id == property.Id))
+                        return NotFound();
+                    else
+                        throw;
+                }
+                return RedirectToAction(nameof(Index));
+            }
             return View(property);
         }
+
 
         // POST: Properties/Edit/5
         [HttpPost]
