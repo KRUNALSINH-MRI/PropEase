@@ -6,9 +6,13 @@
 
 <h1>Properties</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-</p>
+@if (User.IsInRole("Admin") || User.IsInRole("Owner"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Add New Property</a>
+    </p>
+}
+
 
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
@@ -65,11 +69,21 @@
                 <td>@(item.Owner?.Email ?? "N/A")</td>
 
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
-                </td>
+                @if (User.IsInRole("Admin") || User.IsInRole("Owner"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">View</a>
+                    </td>
+                }
+
             </tr>
         }
     </tbody>
