@@ -23,11 +23,11 @@ namespace PropEase.Controllers
         }
 
         // GET: Properties
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.Properties.Include(p => p.Owner);
-            return View(await applicationDbContext.ToListAsync());
-        }
+        //public async Task<IActionResult> Index()
+        //{
+        //    var applicationDbContext = _context.Properties.Include(p => p.Owner);
+        //    return View(await applicationDbContext.ToListAsync());
+        //}
 
         // GET: Properties/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -203,5 +203,51 @@ namespace PropEase.Controllers
         {
             return _context.Properties.Any(e => e.Id == id);
         }
+
+        // PropertiesController.cs
+        public async Task<IActionResult> Index(string search, string type, string city, decimal? minPrice, decimal? maxPrice)
+        {
+            var q = _context.Properties.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+                q = q.Where(p => p.Title.Contains(search) ||
+                                 p.Address.Contains(search) ||
+                                 p.City.Contains(search) ||
+                                 p.State.Contains(search));
+
+            if (!string.IsNullOrEmpty(type))
+                q = q.Where(p => p.Type == type);
+
+            if (!string.IsNullOrEmpty(city))
+                q = q.Where(p => p.City == city);
+
+            if (minPrice.HasValue)
+                q = q.Where(p => p.Price >= minPrice.Value);
+
+            if (maxPrice.HasValue)
+                q = q.Where(p => p.Price <= maxPrice.Value);
+
+            ViewBag.Types = await _context.Properties
+                .Select(p => p.Type)
+                .Distinct()
+                .ToListAsync();
+
+            ViewBag.Cities = await _context.Properties
+                .Select(p => p.City)
+                .Distinct()
+                .ToListAsync();
+
+            ViewBag.CurrentSearch = search;
+            ViewBag.CurrentType = type;
+            ViewBag.CurrentCity = city;
+            ViewBag.CurrentMinPrice = minPrice;
+            ViewBag.CurrentMaxPrice = maxPrice;
+
+            return View(await q.ToListAsync());
+        }
+
+
+
+
     }
 }

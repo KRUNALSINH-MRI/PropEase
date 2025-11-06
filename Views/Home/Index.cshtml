@@ -32,39 +32,125 @@
 <!-- 🏡 HERO SECTION -->
 <section class="hero-section text-white text-center d-flex align-items-center justify-content-center">
     <div class="container">
-        <h1 class="hero-title">Find Your Perfect Home with Ease</h1>
-        <p class="hero-subtitle">Explore thousands of verified listings for rent, sale, or purchase — all in one place.</p>
+        <h1 class="hero-title mb-3">Find Your Perfect Home with Ease</h1>
+        <p class="hero-subtitle mb-4">
+            Explore thousands of verified listings for rent, sale, or purchase — all in one place.
+        </p>
 
-        <!-- 🔍 Search Bar -->
-        <div class="search-box d-flex flex-wrap justify-content-center">
-            <select class="form-select city-select m-2">
-                <option selected disabled>Select City</option>
-                <option>Ahmedabad</option>
-                <option>Bangalore</option>
-                <option>Delhi</option>
-                <option>Hyderabad</option>
-                <option>Mumbai</option>
-                <option>Pune</option>
-                <option>Vadodara</option>
-                
-                
-                
+        <!-- 🔍 Search & Filter Form -->
+        <form asp-action="Index" method="get" class="search-box d-flex flex-wrap justify-content-center align-items-center" role="search">
+            <!-- City Dropdown -->
+            <select name="city" class="form-select city-select m-2" aria-label="Select city">
+                <option value="">All Cities</option>
+                @foreach (var c in ViewBag.Cities as List<string> ?? new List<string> { "Ahmedabad", "Bangalore", "Delhi", "Hyderabad", "Mumbai", "Pune", "Vadodara" })
+                {
+                    if (ViewBag.CurrentCity == c)
+                    {
+                        <option value="@c" selected="selected">@c</option>
+                    }
+                    else
+                    {
+                        <option value="@c">@c</option>
+                    }
+                }
             </select>
 
-            <select class="form-select type-select m-2">
-                <option selected disabled>Property Type</option>
-                <option>Independent House</option>
-                <option>Apartment</option>
-                <option>Duplex</option>
-                <option>Farm House</option>
-                <option>Villa</option>
+            <!-- Property Type Dropdown -->
+            <select name="type" class="form-select type-select m-2" aria-label="Select property type">
+                <option value="">All Types</option>
+                @foreach (var t in ViewBag.Types as List<string> ?? new List<string> { "Independent House", "Apartment", "Duplex", "Farm House", "Villa" })
+                {
+                    if (ViewBag.CurrentType == t)
+                    {
+                        <option value="@t" selected="selected">@t</option>
+                    }
+                    else
+                    {
+                        <option value="@t">@t</option>
+                    }
+                }
             </select>
 
-            <input type="text" class="form-control search-input m-2" placeholder="Search by locality" />
-            <button class="btn btn-search m-2">Get Started</button>
-        </div>
+            <!-- Text Search -->
+            <input type="text"
+                   name="search"
+                   class="form-control search-input m-2"
+                   placeholder="Search by title, address or city"
+                   value="@(ViewBag.CurrentSearch ?? String.Empty)"
+                   aria-label="Search by title or address" />
+
+            <!-- Price Range -->
+            <input type="number"
+                   name="minPrice"
+                   class="form-control m-2"
+                   placeholder="Min Price"
+                   min="0"
+                   step="0.01"
+                   value="@(ViewBag.CurrentMinPrice?.ToString() ?? String.Empty)"
+                   aria-label="Minimum price" />
+
+            <input type="number"
+                   name="maxPrice"
+                   class="form-control m-2"
+                   placeholder="Max Price"
+                   min="0"
+                   step="0.01"
+                   value="@(ViewBag.CurrentMaxPrice?.ToString() ?? String.Empty)"
+                   aria-label="Maximum price" />
+
+            <!-- Buttons -->
+            <button type="submit" class="btn btn-primary btn-search m-2">Search</button>
+            <a href="/Properties/Index" class="btn btn-outline-light m-2">Reset</a>
+
+
+        </form>
     </div>
 </section>
+
+<!-- Property Listing Section -->
+<section class="property-list container mt-5">
+    <div class="row">
+        @if (Model == null || !Model.Any())
+
+        {
+            <div class="col-12 text-center">
+                <p class="text-muted">No properties found matching your search criteria.</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <img src="@item.ImageUrl" alt="@item.Title" class="card-img-top" style="height: 200px; object-fit: cover;" />
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text mb-1"><strong>City:</strong> @item.City</p>
+                            <p class="card-text mb-1"><strong>Type:</strong> @item.Type</p>
+                            <p class="card-text mb-1"><strong>Price:</strong> ₹@item.Price.ToString("N0")</p>
+                            <p class="card-text text-truncate">@item.Address</p>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary mt-2">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+
+<!-- Optional: Simple JS validation -->
+<script>
+    document.querySelector('form[role="search"]').addEventListener('submit', function (e) {
+        const min = parseFloat(this.querySelector('[name="minPrice"]').value) || 0;
+        const max = parseFloat(this.querySelector('[name="maxPrice"]').value) || 0;
+        if (min && max && min > max) {
+            e.preventDefault();
+            alert('Minimum price cannot be greater than Maximum price.');
+        }
+    });
+</script>
+
 
 
 <section class="features-section container text-center">
@@ -148,8 +234,8 @@
     var roles = currentUser != null ? await UserManager.GetRolesAsync(currentUser) : new List<string>();
 }
 
-@using Microsoft.AspNetCore.Identity
-@using PropEase.Models
+@* @using Microsoft.AspNetCore.Identity
+@using PropEase.Models *@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
