@@ -100,9 +100,9 @@
 
             <!-- Buttons -->
             <button type="submit" class="btn btn-primary btn-search m-2">Search</button>
-            <a href="/Properties/Index" class="btn btn-outline-light m-2">Reset</a>
 
-
+            <!-- ✅ Reset Button (clears all filters & reloads current page) -->
+            <a href="@Url.Action("Index", "Home")" class="btn btn-outline-light m-2" id="resetBtn">Reset</a>
         </form>
     </div>
 </section>
@@ -111,7 +111,6 @@
 <section class="property-list container mt-5">
     <div class="row">
         @if (Model == null || !Model.Any())
-
         {
             <div class="col-12 text-center">
                 <p class="text-muted">No properties found matching your search criteria.</p>
@@ -139,7 +138,7 @@
     </div>
 </section>
 
-<!-- Optional: Simple JS validation -->
+<!-- Optional: JS Validation -->
 <script>
     document.querySelector('form[role="search"]').addEventListener('submit', function (e) {
         const min = parseFloat(this.querySelector('[name="minPrice"]').value) || 0;
@@ -150,6 +149,7 @@
         }
     });
 </script>
+
 
 
 
