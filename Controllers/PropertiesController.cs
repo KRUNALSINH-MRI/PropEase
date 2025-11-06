@@ -17,7 +17,7 @@ namespace PropEase.Controllers
 
 
         public PropertiesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
-        {
+        {  
             _context = context;
             _userManager = userManager;
         }
