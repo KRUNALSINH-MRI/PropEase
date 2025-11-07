@@ -1,0 +1,35 @@
+﻿body {
+    background-color: #f7f8fc;
+}
+
+.property-card {
+    transition: all 0.3s ease;
+}
+
+    .property-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+.card-title {
+    font-size: 1.1rem;
+}
+
+.btn-dark {
+    background-color: black;
+    font-weight: 600;
+}
+
+    .btn-dark:hover {
+        background: linear-gradient(to right, #007bff, #6610f2);
+        color: white;
+    }
+
+.badge {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+}
+
+.bi-trash-fill {
+    font-size: 1.1rem;
+}
