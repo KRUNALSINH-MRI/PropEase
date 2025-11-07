@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PropEase.Data;
 using PropEase.Models;
 using System;
+using System.Buffers.Text;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -46,6 +48,7 @@ namespace PropEase.Controllers
         }
 
         // GET: Properties/Create
+        [Authorize(Roles = "Admin,Owner")]
         public IActionResult Create()
         {
             ViewData["OwnerId"] = new SelectList(_context.Users, "Id", "Id");
@@ -53,6 +56,7 @@ namespace PropEase.Controllers
         }
 
         // POST: Properties/Create
+        [Authorize(Roles = "Admin,Owner")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Property property, IFormFile? ImageFile)
@@ -101,6 +105,7 @@ namespace PropEase.Controllers
 
 
         // GET: Properties/Edit/5
+        [Authorize(Roles = "Admin,Owner")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Property property, IFormFile ImageFile)
@@ -142,6 +147,7 @@ namespace PropEase.Controllers
 
 
         // POST: Properties/Edit/5
+        [Authorize(Roles = "Admin,Owner")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Price,Location,PropertyType,ImageUrl,OwnerId,CreatedDate")] Property property)
@@ -171,6 +177,7 @@ namespace PropEase.Controllers
         }
 
         // GET: Properties/Delete/5
+        [Authorize(Roles = "Admin,Owner")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -207,7 +214,27 @@ namespace PropEase.Controllers
         // PropertiesController.cs
         public async Task<IActionResult> Index(string search, string type, string city, decimal? minPrice, decimal? maxPrice)
         {
-            var q = _context.Properties.AsQueryable();
+            var q = _context.Properties
+                .Include(p => p.Owner) // 👈 add this line
+                .AsQueryable();
+
+
+            // 🧠 Filter properties based on logged -in user role
+            if (User.IsInRole("Owner"))
+            {
+                var userId = _userManager.GetUserId(User);
+                q = q.Where(p => p.OwnerId == userId);
+            }
+            else if (User.IsInRole("Admin"))
+            {
+                // Admin sees everything (no filter)
+            }
+            else
+            {
+                // Customer also sees all — but actions are hidden in the view
+            }
+
+
 
             if (!string.IsNullOrEmpty(search))
                 q = q.Where(p => p.Title.Contains(search) ||
