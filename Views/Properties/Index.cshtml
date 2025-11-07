@@ -74,15 +74,37 @@
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> | 
+                        <form asp-controller="Favorites" asp-action="ToggleFavorite" method="post" class="mt-2">
+                            <input type="hidden" name="propertyId" value="@item.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                ❤️ Add to Favorites
+                            </button>
+                        </form>
+                        <a asp-controller="Messages" asp-action="ContactOwner" asp-route-id="@item.Id"
+                           class="btn btn-sm btn-outline-success ms-1">
+                            📩 Contact
+                        </a>
                     </td>
                 }
                 else
                 {
                     <td>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">View</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                        <form asp-controller="Favorites" asp-action="ToggleFavorite" method="post" class="mt-2">
+                            <input type="hidden" name="propertyId" value="@item.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                ❤️ Add to Favorites
+                            </button>
+                        </form>
+                        <a asp-controller="Messages" asp-action="ContactOwner" asp-route-id="@item.Id"
+                           class="btn btn-sm btn-outline-success ms-1">
+                            📩 Contact
+                        </a>
                     </td>
                 }
+                <!-- Favorite button visible to everyone -->
+                
 
             </tr>
         }

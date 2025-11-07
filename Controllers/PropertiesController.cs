@@ -106,9 +106,23 @@ namespace PropEase.Controllers
 
         // GET: Properties/Edit/5
         [Authorize(Roles = "Admin,Owner")]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var property = await _context.Properties.FindAsync(id);
+            if (property == null)
+                return NotFound();
+
+            return View(property);
+        }
+
+        // POST: Properties/Edit/5
+        [Authorize(Roles = "Admin,Owner")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Property property, IFormFile ImageFile)
+        public async Task<IActionResult> Edit(int id, Property property, IFormFile? ImageFile)
         {
             if (id != property.Id)
                 return NotFound();
@@ -119,8 +133,11 @@ namespace PropEase.Controllers
                 {
                     if (ImageFile != null && ImageFile.Length > 0)
                     {
+                        var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/properties");
+                        Directory.CreateDirectory(uploadsFolder);
+
                         var fileName = Path.GetFileName(ImageFile.FileName);
-                        var filePath = Path.Combine("wwwroot/images/properties", fileName);
+                        var filePath = Path.Combine(uploadsFolder, fileName);
 
                         using (var stream = new FileStream(filePath, FileMode.Create))
                         {
@@ -142,39 +159,10 @@ namespace PropEase.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             return View(property);
         }
 
-
-        // POST: Properties/Edit/5
-        [Authorize(Roles = "Admin,Owner")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Price,Location,PropertyType,ImageUrl,OwnerId,CreatedDate")] Property property)
-        {
-            if (id != property.Id)
-                return NotFound();
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(property);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PropertyExists(property.Id))
-                        return NotFound();
-                    else
-                        throw;
-                }
-                return RedirectToAction(nameof(Index));
-            }
-
-            ViewData["OwnerId"] = new SelectList(_context.Users, "Id", "Id", property.OwnerId);
-            return View(property);
-        }
 
         // GET: Properties/Delete/5
         [Authorize(Roles = "Admin,Owner")]

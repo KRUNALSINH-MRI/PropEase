@@ -19,6 +19,12 @@ namespace PropEase.Data
 
         public DbSet<ContactMessage> ContactMessages { get; set; }
 
+        public DbSet<Favorite> Favorites { get; set; }
+
+        public DbSet<PropertyMessage> PropertyMessages { get; set; }
+
+
+
     }
 }
 
