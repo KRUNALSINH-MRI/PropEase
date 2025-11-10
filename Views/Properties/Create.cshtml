@@ -186,14 +186,19 @@
             }
         }
 
-        document.querySelector("form").addEventListener("submit", function (e) {
-            const fileInput = document.getElementById("ImageFile");
-            const urlInput = document.getElementById("ImageUrl");
+        // Attach validation only to the "Post Property" form
+        const propertyForm = document.querySelector("#postPropertyForm");
 
-            if (fileInput.files.length === 0 && urlInput.value.trim() === "") {
-                e.preventDefault();
-                alert("Please upload an image or provide an image URL.");
-            }
-        });
+        if (propertyForm) {
+            propertyForm.addEventListener("submit", function (e) {
+                const fileInput = document.getElementById("ImageFile");
+                const urlInput = document.getElementById("ImageUrl");
+
+                if (fileInput.files.length === 0 && urlInput.value.trim() === "") {
+                    e.preventDefault();
+                    alert("Please upload an image or provide an image URL.");
+                }
+            });
+        }
     </script>
 }

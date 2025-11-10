@@ -5,22 +5,31 @@
 body {
     background-color: #f8f9fa;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 80px;
+    /* Adjust depending on navbar height (try 80–100px) */
+    /*background-color: #f8f9fa;*/ /* light neutral background */
+    /*font-family: 'Poppins', sans-serif;*/
+    color: #212529;
 }
 
 /* Page Title */
 h3 {
+    
     font-weight: 600;
     color: #2c3e50;
     margin-bottom: 25px;
-    border-bottom: 2px solid #007bff;
+/*    border-bottom: 2px solid #007bff;*/
     display: inline-block;
     padding-bottom: 5px;
+    justify-content: center;
+    padding-left: 50px;
 }
 
 /* Page Container */
 .row {
+    padding-left: 50px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     margin-top: 30px;
 }

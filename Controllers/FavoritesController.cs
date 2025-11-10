@@ -23,7 +23,7 @@ namespace PropEase.Controllers
 
         // Add or remove a property from favorites
         [HttpPost]
-        public async Task<IActionResult> ToggleFavorite(int propertyId)
+        public async Task<IActionResult> ToggleFavorite(int propertyId, string returnUrl = null)
         {
             var user = await _userManager.GetUserAsync(User);
             var favorite = await _context.Favorites
@@ -43,8 +43,17 @@ namespace PropEase.Controllers
             }
 
             await _context.SaveChangesAsync();
+
+            // If a return URL was provided, redirect there (e.g., Wishlist page)
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            // Otherwise, go to Properties/Index by default
             return RedirectToAction("Index", "Properties");
         }
+
 
         // Display user's favorite properties
         public async Task<IActionResult> MyFavorites()
