@@ -4,28 +4,38 @@
     ViewData["Title"] = "Contact Owner";
 }
 
-<div class="container mt-5">
-    <h2 class="text-center mb-4">📩 Contact Property Owner</h2>
+<head>
+    <link rel="stylesheet" href="~/css/contact_message.css" />
 
-    @if (ViewBag.Success != null)
-    {
-        <div class="alert alert-success text-center">@ViewBag.Success</div>
-    }
+</head>
 
-    <form asp-action="ContactOwner" method="post">
-        <input type="hidden" asp-for="PropertyId" />
-        <input type="hidden" asp-for="OwnerId" />
+<link rel="stylesheet" href="~/css/contact_message.css" />
 
-        <div class="mb-3">
-            <label class="form-label">Property</label>
-            <input type="text" class="form-control" value="@Model.PropertyTitle" readonly />
-        </div>
+<div class="contact-owner-section">
+    <div class="container">
+        <h2>Contact Property Owner</h2>
 
-        <div class="mb-3">
-            <label asp-for="Message" class="form-label">Your Message</label>
-            <textarea asp-for="Message" class="form-control" rows="5" required></textarea>
-        </div>
+        @if (ViewBag.Success != null)
+        {
+            <div class="alert alert-success text-center">@ViewBag.Success</div>
+        }
 
-        <button type="submit" class="btn btn-primary">Send Message</button>
-    </form>
+        <form asp-action="ContactOwner" method="post" class="contact-owner-form">
+            <input type="hidden" asp-for="PropertyId" />
+            <input type="hidden" asp-for="OwnerId" />
+
+            <div class="mb-3">
+                <label class="form-label">Property</label>
+                <input type="text" class="form-control" value="@Model.PropertyTitle" readonly />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Message" class="form-label">Your Message</label>
+                <textarea asp-for="Message" class="form-control" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+    </div>
 </div>
+

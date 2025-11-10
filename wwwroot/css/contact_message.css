@@ -1,0 +1,96 @@
+﻿/* ========== Contact Property Owner Page ========== */
+
+/* Section wrapper */
+.contact-owner-section {
+    padding-top: 100px; /* keeps space below navbar */
+    padding-bottom: 60px;
+    background: #f8f9fa;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+    /* Page title */
+    .contact-owner-section h2 {
+        font-weight: 700;
+        color: #0d6efd;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+/* Form container */
+.contact-owner-form {
+    max-width: 650px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    padding: 30px 35px;
+    transition: all 0.3s ease;
+}
+
+    .contact-owner-form:hover {
+        transform: translateY(-3px);
+    }
+
+    /* Labels */
+    .contact-owner-form label {
+        font-weight: 600;
+        color: #495057;
+    }
+
+    /* Read-only input */
+    .contact-owner-form input[readonly] {
+        background-color: #f1f3f5;
+        border: 1px solid #ced4da;
+        color: #495057;
+    }
+
+    /* Inputs & Textarea */
+    .contact-owner-form .form-control {
+        border-radius: 10px;
+        padding: 12px 15px;
+        border: 1px solid #ced4da;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .contact-owner-form .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 8px rgba(13, 110, 253, 0.25);
+        }
+
+    /* Submit Button */
+    .contact-owner-form button[type="submit"] {
+        display: block;
+        width: 100%;
+        border-radius: 10px;
+        padding: 12px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        background: linear-gradient(90deg, #0d6efd, #007bff);
+        border: none;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+        .contact-owner-form button[type="submit"]:hover {
+            background: linear-gradient(90deg, #0056b3, #0046a3);
+            transform: scale(1.02);
+        }
+
+/* Success message */
+.alert-success {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contact-owner-form {
+        padding: 25px;
+        margin: 0 15px;
+    }
+
+    .contact-owner-section h2 {
+        font-size: 1.5rem;
+    }
+}
