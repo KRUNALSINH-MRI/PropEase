@@ -1,4 +1,6 @@
-﻿/* ===== General Page Styling ===== */
+﻿/* ============================================
+   GENERAL PAGE STYLING
+============================================ */
 body {
     background-color: #f8f9fb;
     font-family: 'Poppins', sans-serif;
@@ -9,12 +11,13 @@ h2 {
     color: #2c3e50;
 }
 
-/* ===== Container Spacing ===== */
 .container {
     max-width: 1200px;
 }
 
-/* ===== Property Card Styling ===== */
+/* ============================================
+   PROPERTY CARD STYLING
+============================================ */
 .property-card {
     transition: all 0.3s ease;
     background-color: #fff;
@@ -27,19 +30,14 @@ h2 {
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     }
 
-/* ===== Property Image ===== */
+/* Property Image */
 .card-img-top {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     object-fit: cover;
 }
 
-.badge {
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-/* ===== Property Content ===== */
+/* Card Content */
 .card-body {
     padding: 20px;
 }
@@ -48,7 +46,12 @@ h2 {
     font-size: 1.15rem;
     color: #212529;
     margin-bottom: 0.3rem;
+    transition: color 0.3s;
 }
+
+    .card-title:hover {
+        color: #007bff;
+    }
 
 .text-muted {
     color: #6c757d !important;
@@ -58,12 +61,24 @@ h2 {
     font-size: 1rem;
 }
 
-/* ===== Buttons ===== */
+/* ============================================
+   BUTTON STYLING
+============================================ */
 .btn {
     font-weight: 500;
     transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.btn-sm {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 50px;
+}
+
+/* Primary Button */
 .btn-primary {
     background-color: #007bff;
     border: none;
@@ -74,6 +89,7 @@ h2 {
         transform: translateY(-2px);
     }
 
+/* Dark Button */
 .btn-dark {
     background-color: #212529;
     color: white;
@@ -85,57 +101,128 @@ h2 {
         color: white;
     }
 
+/* Outline Buttons */
 .btn-outline-primary {
-    border-color: #007bff;
+    border: 1.5px solid #007bff;
     color: #007bff;
+    background-color: #fff;
 }
 
     .btn-outline-primary:hover {
         background-color: #007bff;
-        color: white;
+        color: #fff;
     }
 
 .btn-outline-danger {
-    border-color: #dc3545;
+    border: 1.5px solid #dc3545;
     color: #dc3545;
+    background-color: #fff;
 }
 
     .btn-outline-danger:hover {
         background-color: #dc3545;
-        color: white;
+        color: #fff;
     }
 
 .btn-outline-success {
-    border-color: #198754;
+    border: 1.5px solid #198754;
     color: #198754;
+    background-color: #fff;
 }
 
     .btn-outline-success:hover {
         background-color: #198754;
-        color: white;
+        color: #fff;
     }
 
-/* ===== Favorite & Contact Buttons ===== */
-.btn-sm {
+/* ============================================
+   WISHLIST TOGGLE BUTTON
+============================================ */
+.btn-wishlist {
+    border: 1.5px solid #dc3545;
+    color: #dc3545;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    min-width: 95px;
+    text-align: center;
+    font-weight: 500;
+}
+
+    .btn-wishlist:hover,
+    .btn-wishlist.active {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+/* ============================================
+   PROPERTY ACTION BUTTONS (DETAILS, CONTACT, WISHLIST)
+============================================ */
+.property-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* ✅ adds visible space between buttons */
+    width: 100%;
+}
+
+    .property-actions .btn,
+    .property-actions form .btn {
+        flex: 1; /* ensures all buttons have equal width */
+        text-align: center;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        border-radius: 50px;
+    }
+
+
+/* ============================================
+   ADD PROPERTY BUTTON
+============================================ */
+.btn-primary.rounded-pill {
+    background: linear-gradient(45deg, #007bff, #6610f2);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+    .btn-primary.rounded-pill:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(45deg, #6610f2, #007bff);
+    }
+
+/* ============================================
+   TEXT + BADGES
+============================================ */
+.fw-semibold.text-dark {
+    color: #27ae60 !important;
+    font-size: 1.05rem;
+}
+
+.text-muted.small {
     font-size: 0.85rem;
-    padding: 6px 12px;
 }
 
-.btn-rounded {
-    border-radius: 50px;
+.badge {
+    font-size: 0.75rem;
+    font-weight: 600;
 }
 
-.bi-trash-fill {
-    font-size: 1rem;
-}
+    .badge.bg-secondary {
+        background-color: #6c757d;
+    }
 
-/* ===== Hover Effects ===== */
-.card-title:hover {
-    color: #007bff;
-    transition: color 0.3s;
-}
+    .badge.bg-info {
+        background-color: #0dcaf0;
+        color: #0c5460;
+    }
 
-/* ===== Responsive Layout ===== */
+    .badge.bg-success {
+        background-color: #28a745;
+    }
+
+/* ============================================
+   RESPONSIVE DESIGN
+============================================ */
 @media (max-width: 992px) {
     .card-title {
         font-size: 1rem;
@@ -150,41 +237,13 @@ h2 {
     .property-card {
         margin-bottom: 20px;
     }
-}
 
-/* ===== Add Property Button ===== */
-.btn-primary.rounded-pill {
-    background: linear-gradient(45deg, #007bff, #6610f2);
-    font-weight: 600;
-    letter-spacing: 0.3px;
-}
-
-    .btn-primary.rounded-pill:hover {
-        transform: translateY(-2px);
-        background: linear-gradient(45deg, #6610f2, #007bff);
+    .property-actions {
+        flex-direction: column;
+        gap: 8px;
     }
 
-/* ===== Price Highlight ===== */
-.fw-semibold.text-dark {
-    color: #27ae60 !important;
-    font-size: 1.05rem;
-}
-
-/* ===== City and Address ===== */
-.text-muted.small {
-    font-size: 0.85rem;
-}
-
-/* ===== Property Info Badges ===== */
-.badge.bg-secondary {
-    background-color: #6c757d;
-}
-
-.badge.bg-info {
-    background-color: #0dcaf0;
-    color: #0c5460;
-}
-
-.badge.bg-success {
-    background-color: #28a745;
+        .property-actions .btn {
+            width: 100%;
+        }
 }

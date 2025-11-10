@@ -144,102 +144,157 @@ body {
 }
 
 /* =========================
-   FOOTER SECTION STYLING
+   FOOTER SECTION STYLING (SLIM HEIGHT)
    ========================= */
+
 .footer-section {
-    background: #000; /* solid black background */
+    background: #000;
     color: #fff;
-    padding: 50px 0 20px;
+    padding: 30px 0 15px; /* reduced vertical height */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    animation: fadeInUp 1s ease-out;
 }
 
+/* Center the 3 footer columns neatly */
 .footer-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: flex-start;
     flex-wrap: wrap;
-    gap: 40px;
-    padding: 0 40px;
+    gap: 40px; /* reduced from 60px */
+    padding: 0 40px; /* slightly reduced side padding */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
+/* ABOUT SECTION */
 .footer-about {
     flex: 1;
     min-width: 250px;
+    max-width: 320px;
 }
 
     .footer-about h4 {
         font-size: 1.8rem;
         font-weight: 700;
-        margin-bottom: 15px;
-        color: #00bfff; /* blue accent */
+        margin-bottom: 12px; /* reduced from 15px */
+        color: #00bfff;
     }
 
     .footer-about p {
-        line-height: 1.6;
+        line-height: 1.5; /* slightly tighter line spacing */
         color: #ccc;
     }
 
+/* QUICK LINKS SECTION */
 .footer-links {
     flex: 1;
     min-width: 200px;
+    max-width: 250px;
 }
 
     .footer-links h5 {
-        margin-bottom: 15px;
+        margin-bottom: 12px;
         color: #00bfff;
+        font-weight: 600;
     }
 
     .footer-links ul {
         list-style: none;
         padding: 0;
+        margin: 0;
     }
 
         .footer-links ul li {
-            margin-bottom: 10px;
+            margin-bottom: 8px; /* reduced space between items */
         }
 
             .footer-links ul li a {
                 color: #fff;
                 text-decoration: none;
-                transition: color 0.3s ease;
+                transition: color 0.3s ease, transform 0.2s ease;
             }
 
                 .footer-links ul li a:hover {
                     color: #00bfff;
+                    transform: translateX(4px);
                 }
 
+/* CONTACT SECTION */
 .footer-contact {
     flex: 1;
     min-width: 250px;
+    max-width: 300px;
 }
 
     .footer-contact h5 {
-        margin-bottom: 15px;
+        margin-bottom: 12px;
         color: #00bfff;
+        font-weight: 600;
     }
 
     .footer-contact p {
-        margin: 6px 0;
+        margin: 4px 0; /* tighter spacing */
         color: #ccc;
     }
 
+    .footer-contact i {
+        color: #00bfff;
+        margin-right: 8px;
+    }
+
+/* BOTTOM COPYRIGHT SECTION */
 .footer-bottom {
     text-align: center;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
-    padding-top: 15px;
-    margin-top: 30px;
+    padding-top: 10px; /* reduced */
+    margin-top: 25px; /* reduced */
     color: #888;
     font-size: 0.9rem;
+    letter-spacing: 0.5px;
 }
 
-/* Responsive footer */
-@media (max-width: 768px) {
+/* Hover animation for all links */
+.footer-section a {
+    position: relative;
+}
+
+    .footer-section a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 0%;
+        height: 2px;
+        background-color: #00bfff;
+        transition: width 0.3s ease;
+    }
+
+    .footer-section a:hover::after {
+        width: 100%;
+    }
+
+/* Responsive design */
+@media (max-width: 992px) {
     .footer-container {
         flex-direction: column;
-        text-align: center;
-        gap: 20px;
-    }
-
-    .footer-about h4 {
-        font-size: 1.5rem;
+        align-items: center;
+        gap: 25px; /* smaller vertical space on mobile */
+        padding: 0 20px;
     }
 }
+
+/* Smooth fade-in animation */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
