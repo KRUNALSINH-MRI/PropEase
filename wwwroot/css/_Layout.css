@@ -40,6 +40,15 @@
         transform: scale(1.05);
     }
 
+.nav-link {
+    white-space: nowrap; /* Prevents breaking into two lines */
+    display: inline-flex;
+    align-items: center;
+    gap: 6px; /* Adds a small gap between emoji and text */
+}
+
+
+
 /* Logout button */
 #logout {
     color: #ffffff !important;
@@ -84,6 +93,14 @@
         transform: translateY(-2px);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
+
+
+body {
+    padding-top: 40px; /* Adjust depending on navbar height (try 80–100px) */
+    background-color: #f8f9fa; /* light neutral background */
+    font-family: 'Poppins', sans-serif;
+    color: #212529;
+}
 
 /* ==============================
    RESPONSIVE NAVBAR (MOBILE & TABLET)

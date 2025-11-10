@@ -1,23 +1,83 @@
-﻿body {
-    background-color: #f7f8fc;
+﻿/* ===== General Page Styling ===== */
+body {
+    background-color: #f8f9fb;
+    font-family: 'Poppins', sans-serif;
 }
 
+h2 {
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+/* ===== Container Spacing ===== */
+.container {
+    max-width: 1200px;
+}
+
+/* ===== Property Card Styling ===== */
 .property-card {
     transition: all 0.3s ease;
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
     .property-card:hover {
-        transform: translateY(-6px);
+        transform: translateY(-8px);
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     }
 
-.card-title {
-    font-size: 1.1rem;
+/* ===== Property Image ===== */
+.card-img-top {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    object-fit: cover;
 }
 
-.btn-dark {
-    background-color: black;
+.badge {
+    font-size: 0.75rem;
     font-weight: 600;
+}
+
+/* ===== Property Content ===== */
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.15rem;
+    color: #212529;
+    margin-bottom: 0.3rem;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+.fw-semibold {
+    font-size: 1rem;
+}
+
+/* ===== Buttons ===== */
+.btn {
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+.btn-dark {
+    background-color: #212529;
+    color: white;
+    border: none;
 }
 
     .btn-dark:hover {
@@ -25,11 +85,106 @@
         color: white;
     }
 
-.badge {
-    font-size: 0.8rem;
-    padding: 6px 10px;
+.btn-outline-primary {
+    border-color: #007bff;
+    color: #007bff;
+}
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+.btn-outline-danger {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+
+.btn-outline-success {
+    border-color: #198754;
+    color: #198754;
+}
+
+    .btn-outline-success:hover {
+        background-color: #198754;
+        color: white;
+    }
+
+/* ===== Favorite & Contact Buttons ===== */
+.btn-sm {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+}
+
+.btn-rounded {
+    border-radius: 50px;
 }
 
 .bi-trash-fill {
-    font-size: 1.1rem;
+    font-size: 1rem;
+}
+
+/* ===== Hover Effects ===== */
+.card-title:hover {
+    color: #007bff;
+    transition: color 0.3s;
+}
+
+/* ===== Responsive Layout ===== */
+@media (max-width: 992px) {
+    .card-title {
+        font-size: 1rem;
+    }
+
+    .btn {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .property-card {
+        margin-bottom: 20px;
+    }
+}
+
+/* ===== Add Property Button ===== */
+.btn-primary.rounded-pill {
+    background: linear-gradient(45deg, #007bff, #6610f2);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+    .btn-primary.rounded-pill:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(45deg, #6610f2, #007bff);
+    }
+
+/* ===== Price Highlight ===== */
+.fw-semibold.text-dark {
+    color: #27ae60 !important;
+    font-size: 1.05rem;
+}
+
+/* ===== City and Address ===== */
+.text-muted.small {
+    font-size: 0.85rem;
+}
+
+/* ===== Property Info Badges ===== */
+.badge.bg-secondary {
+    background-color: #6c757d;
+}
+
+.badge.bg-info {
+    background-color: #0dcaf0;
+    color: #0c5460;
+}
+
+.badge.bg-success {
+    background-color: #28a745;
 }

@@ -94,12 +94,13 @@
                 <label asp-for="FurnishType" class="control-label"></label>
                 <select asp-for="FurnishType" class="form-control">
                     <option value="">-- Select Furnish Type --</option>
-                    <option value="Furnished">Furnished</option>
-                    <option value="Semi-Furnished">Semi-Furnished</option>
-                    <option value="Unfurnished">Unfurnished</option>
+                    <option value="Furnished" selected="@(Model.FurnishType == "Furnished" ? "selected" : null)">Furnished</option>
+                    <option value="Semi-Furnished" selected="@(Model.FurnishType == "Semi-Furnished" ? "selected" : null)">Semi-Furnished</option>
+                    <option value="Unfurnished" selected="@(Model.FurnishType == "Unfurnished" ? "selected" : null)">Unfurnished</option>
                 </select>
                 <span asp-validation-for="FurnishType" class="text-danger"></span>
             </div>
+
 
 
             <!-- Pricing -->

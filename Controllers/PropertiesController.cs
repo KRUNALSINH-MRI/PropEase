@@ -119,6 +119,7 @@ namespace PropEase.Controllers
         }
 
         // POST: Properties/Edit/5
+        // POST: Properties/Edit/5
         [Authorize(Roles = "Admin,Owner")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -131,6 +132,18 @@ namespace PropEase.Controllers
             {
                 try
                 {
+                    // ✅ Get the existing property from DB first
+                    var existingProperty = await _context.Properties.AsNoTracking()
+                        .FirstOrDefaultAsync(p => p.Id == id);
+
+                    if (existingProperty == null)
+                        return NotFound();
+
+                    // ✅ Preserve the original OwnerId and PostedOn date
+                    property.OwnerId = existingProperty.OwnerId;
+                    property.PostedOn = existingProperty.PostedOn;
+
+                    // ✅ Handle image upload (if new one provided)
                     if (ImageFile != null && ImageFile.Length > 0)
                     {
                         var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/properties");
@@ -146,9 +159,16 @@ namespace PropEase.Controllers
 
                         property.ImageUrl = "/images/properties/" + fileName;
                     }
+                    else
+                    {
+                        // ✅ Keep existing image if no new file is uploaded
+                        property.ImageUrl = existingProperty.ImageUrl;
+                    }
 
                     _context.Update(property);
                     await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -157,11 +177,11 @@ namespace PropEase.Controllers
                     else
                         throw;
                 }
-                return RedirectToAction(nameof(Index));
             }
 
             return View(property);
         }
+
 
 
         // GET: Properties/Delete/5
