@@ -50,7 +50,7 @@ It allows users to **browse, search, and manage properties**, **contact owners**
 
 ### 1. Clone the repository
 - bash
-- git clone https://github.com/<your-username>/PropEase.git
+- git clone https://github.com/KRUNALSINH-MRI/PropEase.git
 - cd PropEase
 
 ### 2. Configure the database
