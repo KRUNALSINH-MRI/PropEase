@@ -42,6 +42,11 @@ namespace PropEase.Controllers
         {
             if (ModelState.IsValid)
             {
+                var property = await _context.Properties.FindAsync(model.PropertyId);
+                if (property != null)
+                {
+                    model.PropertyTitle = property.Title; // ✅ Reassign server-side
+                }
                 // Ensure EF doesn’t think we’re updating an existing record
                 model.Id = 0;
 
