@@ -96,7 +96,7 @@
 
 
 body {
-    padding-top: 40px; /* Adjust depending on navbar height (try 80–100px) */
+    padding-top: 56px; /* Adjust depending on navbar height (try 80–100px) */
     background-color: #f8f9fa; /* light neutral background */
     font-family: 'Poppins', sans-serif;
     color: #212529;

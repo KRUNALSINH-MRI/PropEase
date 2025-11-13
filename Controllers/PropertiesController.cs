@@ -202,7 +202,7 @@ namespace PropEase.Controllers
         }
 
         // POST: Properties/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
