@@ -200,11 +200,11 @@
         <div class="row property-cards">
             <!-- Property 1 -->
             <div class="col-md-4 property-card">
-                <img src="~/images/house.jpg" alt="Property 1" class="property-img">
+                <img src="~/images/apartment.jpg" alt="Property 1" class="property-img">
                 <div class="property-info">
                     <h5>Luxury Apartment in Mumbai</h5>
                     <p>3 BHK • Sea View • ₹2.5 Cr</p>
-                    <button class="btn-view">View Details</button>
+                    <a asp-controller="Properties" asp-action="Details" asp-route-id="14" class="btn-view">View Details</a>
                 </div>
             </div>
 
@@ -214,7 +214,7 @@
                 <div class="property-info">
                     <h5>Modern Villa in Bangalore</h5>
                     <p>4 BHK • Private Garden • ₹3.5 Cr</p>
-                    <button class="btn-view">View Details</button>
+                    <a asp-controller="Properties" asp-action="Details" asp-route-id="15" class="btn-view">View Details</a>
                 </div>
             </div>
 
@@ -222,9 +222,9 @@
             <div class="col-md-4 property-card">
                 <img src="~/images/apartment.jpg" alt="Property 3" class="property-img">
                 <div class="property-info">
-                    <h5>Smart Apartment in Delhi</h5>
+                    <h5>Smart House in Delhi</h5>
                     <p>2 BHK • Near Metro • ₹2 Cr</p>
-                    <button class="btn-view">View Details</button>
+                    <a asp-controller="Properties" asp-action="Details" asp-route-id="16" class="btn-view">View Details</a>
                 </div>
             </div>
         </div>
@@ -250,7 +250,7 @@
 
 <section class="cta-section text-center text-white">
     <div class="container">
-        <h2>Are you a Property Owner?</h2>
+        <h2 class="text-light">Are you a Property Owner?</h2>
         <p>List your property for FREE and connect with verified buyers and tenants.</p>
 
         @if (SignInManager.IsSignedIn(User))
