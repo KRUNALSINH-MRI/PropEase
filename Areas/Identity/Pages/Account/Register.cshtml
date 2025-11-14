@@ -102,14 +102,22 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         @if (TempData["RegistrationSuccess"] != null)
         {
                 <text>
-                    alert("Registration successful! You can now log in.");
-                    window.location.href = "/Identity/Account/Login";
+                    Swal.fire({
+                        title: "🎉 Registration Successful!",
+                        text: "You can now log in to your account.",
+                        icon: "success",
+                        confirmButtonText: "Go to Login"
+                    }).then(() => {
+                        window.location.href = "/Identity/Account/Login";
+                    });
                 </text>
         }
     </script>
+
 }
 
