@@ -8,12 +8,12 @@
         Layout = "/Areas/Identity/Pages/_Layout.cshtml";
     }
 }
-
-<h1>Manage your account</h1>
+<head>
+    <link href="~/css/layout.css" rel="stylesheet" />
+</head>
+<body>
 
 <div>
-    <h2>Change your account settings</h2>
-    <hr />
     <div class="row">
         <div class="col-md-3">
             <partial name="_ManageNav" />
@@ -23,7 +23,7 @@
         </div>
     </div>
 </div>
-
+</body>
 @section Scripts {
     @RenderSection("Scripts", required: false)
 }

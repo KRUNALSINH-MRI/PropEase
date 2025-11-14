@@ -1,0 +1,65 @@
+﻿@model IEnumerable<PropEase.Models.Favorite>
+
+@{
+    ViewData["Title"] = "My Favorite Properties";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">❤️ My Favorite Properties</h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="text-center text-muted">
+            <p>You haven’t added any properties to your favorites yet.</p>
+            <a asp-controller="Properties" asp-action="Index" class="btn btn-primary mt-3">
+                Browse Properties
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var fav in Model)
+            {
+                var property = fav.Property;
+
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm rounded-3">
+                        <img src="@property.ImageUrl" class="card-img-top" alt="@property.Title" style="height:200px; object-fit:cover; border-top-left-radius:10px; border-top-right-radius:10px;" />
+
+                        <div class="card-body">
+                            <h5 class="card-title">@property.Title</h5>
+                            <p class="card-text text-muted mb-1">
+                                @($"{property.Address}, {property.City}, {property.State}")
+                            </p>
+                            <p class="card-text mb-1"><strong>BHK:</strong> @((property.BHK == 0) ? "1 RK" : $"{property.BHK} BHK")</p>
+                            <p class="card-text mb-1"><strong>Area:</strong> @property.Area sq.ft</p>
+                            <p class="card-text mb-1"><strong>Furnish Type:</strong> @property.FurnishType</p>
+                            <p class="card-text text-success fw-bold">₹@property.Price</p>
+                            <p class="card-text"><strong>Type:</strong> @property.Type</p>
+
+                            <div class="d-flex justify-content-between mt-3">
+                                <a asp-controller="Properties" asp-action="Details" asp-route-id="@property.Id" class="btn btn-sm btn-outline-primary">
+                                    View Details
+                                </a>
+
+                                <form asp-controller="Favorites" asp-action="ToggleFavorite" method="post">
+                                    <input type="hidden" name="propertyId" value="@property.Id" />
+                                    <input type="hidden" name="returnUrl" value="@Url.Action("MyFavorites", "Favorites")" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        💔 Remove
+                                    </button>
+                                </form>
+
+                            </div>
+                        </div>
+
+                        <div class="card-footer text-muted text-end" style="font-size: 0.85rem;">
+                            Listed on @property.PostedOn.ToString("dd-MMM-yyyy")
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,8 +1,296 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using Microsoft.AspNetCore.Identity
+@using PropEase.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model List<PropEase.Models.Property>
+
+
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@* <section class="hero-section text-white text-center">
+    <div class="container-fluid">
+        <h1 class="hero-title">Find Your Dream Property with <span>PropEase</span></h1>
+        <p class="hero-subtitle">Buy, Rent, or Sell properties with ease — all in one place!</p>
+
+        <div class="search-box">
+            <select class="form-select city-select">
+                <option selected disabled>Select City</option>
+                <option>Mumbai</option>
+                <option>Pune</option>
+                <option>Delhi</option>
+                <option>Bangalore</option>
+                <option>Hyderabad</option>
+            </select>
+            <input type="text" class="form-control search-input" placeholder="Search properties, locality or project..." />
+            <button class="btn btn-search">Search</button>
+        </div>
+    </div>
+</section> *@
+
+
+<!-- 🏡 HERO SECTION -->
+<section class="hero-section text-white text-center d-flex align-items-center justify-content-center">
+    <div class="container">
+        <h1 class="hero-title mb-3">Find Your Perfect Home with Ease</h1>
+        <p class="hero-subtitle mb-4">
+            Explore thousands of verified listings for rent, sale, or purchase — all in one place.
+        </p>
+
+        <!-- 🔍 Search & Filter Form -->
+        <form asp-controller="Properties" asp-action="Index" method="get" class="search-box d-flex flex-wrap justify-content-center align-items-center" role="search">
+
+            <!-- City Dropdown -->
+            <select name="city" class="form-select city-select m-2" aria-label="Select city">
+                <option value="">All Cities</option>
+                @foreach (var c in ViewBag.Cities as List<string> ?? new List<string> { "Ahmedabad", "Bangalore", "Delhi", "Hyderabad", "Mumbai", "Pune", "Vadodara" })
+                {
+                    if (ViewBag.CurrentCity == c)
+                    {
+                        <option value="@c" selected="selected">@c</option>
+                    }
+                    else
+                    {
+                        <option value="@c">@c</option>
+                    }
+                }
+            </select>
+
+            <!-- Property Type Dropdown -->
+            <select name="type" class="form-select type-select m-2" aria-label="Select property type">
+                <option value="">All Types</option>
+                @foreach (var t in ViewBag.Types as List<string> ?? new List<string> { "Independent House", "Apartment", "Duplex", "Farm House", "Villa" })
+                {
+                    if (ViewBag.CurrentType == t)
+                    {
+                        <option value="@t" selected="selected">@t</option>
+                    }
+                    else
+                    {
+                        <option value="@t">@t</option>
+                    }
+                }
+            </select>
+
+            <!-- Text Search -->
+            <input type="text"
+                   name="search"
+                   class="form-control search-input m-2"
+                   placeholder="Search by title, address or city"
+                   value="@(ViewBag.CurrentSearch ?? String.Empty)"
+                   aria-label="Search by title or address" />
+
+            <!-- Price Range -->
+            <input type="number"
+                   name="minPrice"
+                   class="form-control m-2"
+                   placeholder="Min Price"
+                   min="0"
+                   step="0.01"
+                   value="@(ViewBag.CurrentMinPrice?.ToString() ?? String.Empty)"
+                   aria-label="Minimum price" />
+
+            <input type="number"
+                   name="maxPrice"
+                   class="form-control m-2"
+                   placeholder="Max Price"
+                   min="0"
+                   step="0.01"
+                   value="@(ViewBag.CurrentMaxPrice?.ToString() ?? String.Empty)"
+                   aria-label="Maximum price" />
+
+            <!-- Buttons -->
+            <button type="submit" class="btn btn-primary btn-search m-2">Search</button>
+
+            <!-- ✅ Reset Button (clears all filters & reloads current page) -->
+            <a href="@Url.Action("Index", "Home")" class="btn btn-outline-light m-2" id="resetBtn">Reset</a>
+        </form>
+    </div>
+</section>
+
+<!-- Property Listing Section -->
+@* <section class="property-list container mt-5">
+    <div class="row">
+        @if (Model == null || !Model.Any())
+        {
+            <div class="col-12 text-center">
+                <p class="text-muted">No properties found matching your search criteria.</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <img src="@item.ImageUrl" alt="@item.Title" class="card-img-top" style="height: 200px; object-fit: cover;" />
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text mb-1"><strong>City:</strong> @item.City</p>
+                            <p class="card-text mb-1"><strong>Type:</strong> @item.Type</p>
+                            <p class="card-text mb-1"><strong>Price:</strong> ₹@item.Price.ToString("N0")</p>
+                            <p class="card-text text-truncate">@item.Address</p>
+                            <a asp-controller="Properties" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary mt-2">View Details</a>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section> *@
+
+<!-- Optional: JS Validation -->
+<script>
+    document.querySelector('form[role="search"]').addEventListener('submit', function (e) {
+        const min = parseFloat(this.querySelector('[name="minPrice"]').value) || 0;
+        const max = parseFloat(this.querySelector('[name="maxPrice"]').value) || 0;
+        if (min && max && min > max) {
+            e.preventDefault();
+            alert('Minimum price cannot be greater than Maximum price.');
+        }
+    });
+</script>
+
+
+
+
+<section class="features-section container text-center">
+    <h2 class="section-title">Explore PropEase Services</h2>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-3 feature-card">
+            <i class="fas fa-credit-card feature-icon"></i>
+            <h4>Pay Rent</h4>
+            <p>Pay your rent online using your Credit or Debit Card.</p>
+        </div>
+
+        <div class="col-md-3 feature-card">
+            <i class="fas fa-building feature-icon"></i>
+            <h4>Premium Properties</h4>
+            <p>Access verified listings and premium real estate options.</p>
+        </div>
+
+        <div class="col-md-3 feature-card">
+            <i class="fas fa-home feature-icon"></i>
+            <h4>Home Loans</h4>
+            <p>Get low-interest home loans from trusted partners.</p>
+        </div>
+
+        <div class="col-md-3 feature-card">
+            <i class="fas fa-shield-alt feature-icon"></i>
+            <h4>Secure Deals</h4>
+            <p>Experience secure and transparent property transactions.</p>
+        </div>
+
+        <div class="col-md-3 feature-card">
+            <i class="fa-solid fa-gem feature-icon"></i>
+            <h4>Housing Premium</h4>
+            <p>Instant access to zero brokerage properties.</p>
+        </div>
+
+    </div>
+</section>
+
+<section class="featured-properties-section">
+    <div class="container">
+        <h2 class="section-title">Featured Properties</h2>
+        <p class="section-subtitle">Explore our handpicked listings across top cities</p>
+        <div class="row property-cards">
+            <!-- Property 1 -->
+            <div class="col-md-4 property-card">
+                <img src="~/images/apartment.jpg" alt="Property 1" class="property-img">
+                <div class="property-info">
+                    <h5>Luxury Apartment in Mumbai</h5>
+                    <p>3 BHK • Sea View • ₹2.5 Cr</p>
+                    <a asp-controller="Properties" asp-action="Details" asp-route-id="14" class="btn-view">View Details</a>
+                </div>
+            </div>
+
+            <!-- Property 2 -->
+            <div class="col-md-4 property-card">
+                <img src="~/images/villa.jpg" alt="Property 2" class="property-img">
+                <div class="property-info">
+                    <h5>Modern Villa in Bangalore</h5>
+                    <p>4 BHK • Private Garden • ₹3.5 Cr</p>
+                    <a asp-controller="Properties" asp-action="Details" asp-route-id="15" class="btn-view">View Details</a>
+                </div>
+            </div>
+
+            <!-- Property 3 -->
+            <div class="col-md-4 property-card">
+                <img src="~/images/apartment.jpg" alt="Property 3" class="property-img">
+                <div class="property-info">
+                    <h5>Smart House in Delhi</h5>
+                    <p>2 BHK • Near Metro • ₹2 Cr</p>
+                    <a asp-controller="Properties" asp-action="Details" asp-route-id="16" class="btn-view">View Details</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+@{
+    var currentUser = await UserManager.GetUserAsync(User);
+    var roles = currentUser != null ? await UserManager.GetRolesAsync(currentUser) : new List<string>();
+}
+
+@* @using Microsoft.AspNetCore.Identity
+@using PropEase.Models *@
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    // var currentUser = await UserManager.GetUserAsync(User);
+    // var roles = currentUser != null ? await UserManager.GetRolesAsync(currentUser) : new List<string>();
+}
+
+<section class="cta-section text-center text-white">
+    <div class="container">
+        <h2 class="text-light">Are you a Property Owner?</h2>
+        <p>List your property for FREE and connect with verified buyers and tenants.</p>
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            if (roles.Contains("Owner") || roles.Contains("Admin"))
+            {
+                <!-- ✅ Owner or Admin can post -->
+                <a asp-controller="Properties" asp-action="Create" class="btn btn-cta">
+                    Post Your Property
+                </a>
+            }
+            else
+            {
+                <!-- 🚫 Client logged in -->
+                <button type="button" class="btn btn-cta" id="noAccessBtn">
+                    Post Your Property
+                </button>
+            }
+        }
+        else
+        {
+            <!-- 🟡 Not logged in -->
+            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-cta">
+                Post Your Property
+            </a>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById("noAccessBtn")?.addEventListener("click", function () {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Access Denied',
+                text: 'You don’t have access to post properties. This feature is available only for property owners.',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
+}
+

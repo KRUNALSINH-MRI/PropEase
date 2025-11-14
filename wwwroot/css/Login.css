@@ -1,32 +1,41 @@
-﻿/* Page background gradient */
+﻿/* ===============================
+   GLOBAL PAGE STYLING
+   =============================== */
 body {
     background: linear-gradient(135deg, #673ab7, #3f51b5);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    height: 100vh;
+    min-height: 100vh; /* Prevent clipping */
     margin: 0;
+    padding: 0;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column; /* Allow natural stacking */
+    overflow-x: hidden;
 }
 
-/* Center form container */
+/* ===============================
+   FORM CONTAINER
+   =============================== */
 .row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Let Bootstrap handle flex behavior */
     width: 100%;
+    margin: 0;
+    padding: 20px;
 }
 
-/* Login form card */
+/* Login card */
 #account {
     background-color: #fff;
     padding: 40px 30px;
     border-radius: 15px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    width: 100%;
+    max-width: 420px;
+    margin: 60px auto; /* Proper vertical centering */
     animation: fadeIn 0.7s ease-in-out;
+    box-sizing: border-box;
 }
 
+/* Animation */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -39,23 +48,26 @@ body {
     }
 }
 
-    /* Heading */
-    #account h4 {
-        text-align: center;
-        margin-bottom: 25px;
-        font-weight: 600;
-        color: #333;
-        font-weight: bold;
-    }
+/* ===============================
+   TEXT STYLING
+   =============================== */
+#account h4 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: bold;
+    color: #333;
+}
 
-    #account h5 {
-        text-align: center;
-        margin-bottom: 25px;
-        font-weight: 600;
-        color: #333;
-    }
+#account h5 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 600;
+    color: #333;
+}
 
-/* Input fields */
+/* ===============================
+   INPUT FIELDS
+   =============================== */
 .form-floating {
     position: relative;
     margin-bottom: 20px;
@@ -67,7 +79,7 @@ body {
     padding: 12px 15px;
     font-size: 15px;
     width: 100%;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
     .form-control:focus {
@@ -76,19 +88,12 @@ body {
         box-shadow: 0 0 0 3px rgba(103, 58, 183, 0.2);
     }
 
-/* Labels */
+/* ===============================
+   LABELS & TEXT
+   =============================== */
 label {
     font-weight: 500;
     color: #444;
-}
-
-/* Remember me checkbox */
-.checkbox {
-    margin-bottom: 15px;
-}
-
-.form-check-input {
-    margin-right: 8px;
 }
 
 /* Validation messages */
@@ -97,7 +102,20 @@ label {
     margin-top: 5px;
 }
 
-/* Login button */
+/* ===============================
+   CHECKBOX
+   =============================== */
+.checkbox {
+    margin-bottom: 15px;
+}
+
+.form-check-input {
+    margin-right: 8px;
+}
+
+/* ===============================
+   BUTTONS & LINKS
+   =============================== */
 #login-submit {
     background: linear-gradient(to right, #3f51b5, #673ab7);
     border: none;
@@ -106,7 +124,7 @@ label {
     padding: 12px;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s ease transform 0.2s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
     #login-submit:hover {
@@ -114,36 +132,86 @@ label {
         transform: translateY(-2px);
     }
 
-/* Links under the form */
-/* Sign-up redirect text */
-    .signup-text {
-        text-align: center;
-        margin-top: 0px;
-        font-size: 0.95rem;
-        color: #555;
-    }
+.signup-text {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.95rem;
+    color: #555;
+}
 
     .signup-text a {
-    color: #3f51b5;
+        color: #3f51b5;
         font-weight: 600;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-    #account a:hover {
-        color: #673ab7;
-        text-decoration: underline;
+        text-decoration: none;
+        transition: color 0.3s ease;
     }
 
-/* Secondary section (external logins) */
+        .signup-text a:hover {
+            color: #673ab7;
+            text-decoration: underline;
+        }
+
+/* Hide external login (if unused) */
 .col-md-6 {
-    display: none; /* hide external login section for clean layout */
+    display: none;
 }
 
-/* Responsive adjustments */
-@media (max-width: 480px) {
+/* ===============================
+   RESPONSIVE DESIGN
+   =============================== */
+
+/* Tablets (≤ 992px) */
+@media (max-width: 992px) {
+    body {
+        padding: 20px;
+        height: auto;
+    }
+
+    #account {
+        max-width: 500px;
+        width: 90%;
+        padding: 30px 25px;
+        margin: 40px auto;
+    }
+}
+
+/* Mobile devices (≤ 768px) */
+@media (max-width: 768px) {
+    body {
+        background: linear-gradient(135deg, #5e35b1, #3f51b5);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 40px;
+        height: auto;
+    }
+
     #account {
         width: 90%;
         padding: 25px 20px;
+        margin: 20px auto;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+        #account h4 {
+            font-size: 1.4rem;
+        }
+}
+
+/* Small mobile screens (≤ 480px) */
+@media (max-width: 480px) {
+    #account {
+        width: 100%;
+        padding: 20px 15px;
+        border-radius: 10px;
+    }
+
+    .form-control {
+        font-size: 0.95rem;
+        padding: 10px;
+    }
+
+    #login-submit {
+        font-size: 1rem;
+        padding: 10px;
     }
 }

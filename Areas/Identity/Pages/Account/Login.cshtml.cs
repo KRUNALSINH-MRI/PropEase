@@ -123,15 +123,34 @@ namespace PropEase.Areas.Identity.Pages.Account
                     user = _userManager.Users.FirstOrDefault(u => u.PhoneNumber == Input.Email);
                 }
 
-
                 if (user != null)
                 {
                     var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User logged in.");
+
+                        // ✅ Get user's roles
+                        var roles = await _userManager.GetRolesAsync(user);
+
+                        if (roles.Contains("Admin"))
+                        {
+                            return LocalRedirect("/Admin/Dashboard");
+                        }
+                        else if (roles.Contains("Owner"))
+                        {
+                            return LocalRedirect("/Properties");
+                        }
+                        else if (roles.Contains("Client"))
+                        {
+                            return LocalRedirect("/Home/Index");
+                        }
+
+                        // Default fallback
                         return LocalRedirect(returnUrl);
                     }
+
                     if (result.RequiresTwoFactor)
                     {
                         return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
@@ -155,6 +174,7 @@ namespace PropEase.Areas.Identity.Pages.Account
             // Something failed, redisplay form
             return Page();
         }
+
 
     }
 }

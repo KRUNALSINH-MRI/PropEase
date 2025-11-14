@@ -1,67 +1,204 @@
 ﻿@model PropEase.Models.Property
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Post Property";
 }
 
-<h1>Create</h1>
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-5">
+            <h2 class="text-center mb-4 fw-bold text-primary">
+                <i class="bi bi-house-door-fill me-2"></i>Post Your Property
+            </h2>
+            <hr class="mb-4">
 
-<h4>Property</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" />
-                <span asp-validation-for="Location" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PropertyType" class="control-label"></label>
-                <input asp-for="PropertyType" class="form-control" />
-                <span asp-validation-for="PropertyType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="OwnerId" class="control-label"></label>
-                <select asp-for="OwnerId" class ="form-control" asp-items="ViewBag.OwnerId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+            <form asp-action="Create" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <!-- 1. Basic Details -->
+                <h4 class="text-secondary mb-3">🏠 Basic Details</h4>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label asp-for="Title" class="form-label fw-semibold"></label>
+                        <input asp-for="Title" class="form-control" placeholder="Enter property title" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="PropertyType" class="form-label fw-semibold"></label>
+                        <select asp-for="PropertyType" class="form-select">
+                            <option value="">-- Select Property Type --</option>
+                            <option>Apartment</option>
+                            <option>Duplex</option>
+                            <option>Farm House</option>
+                            <option>Villa</option>
+                            <option>Independent House</option>
+                        </select>
+                        <span asp-validation-for="PropertyType" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="Description" class="form-label fw-semibold"></label>
+                        <textarea asp-for="Description" class="form-control" rows="3" placeholder="Describe the property..."></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- 2. Location Info -->
+                <h4 class="text-secondary mb-3">📍 Location Info</h4>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label asp-for="Address" class="form-label fw-semibold"></label>
+                        <input asp-for="Address" class="form-control" placeholder="Enter address" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="City" class="form-label fw-semibold"></label>
+                        <input asp-for="City" class="form-control" placeholder="City" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="State" class="form-label fw-semibold"></label>
+                        <input asp-for="State" class="form-control" placeholder="State" />
+                        <span asp-validation-for="State" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="ZipCode" class="form-label fw-semibold"></label>
+                        <input asp-for="ZipCode" class="form-control" placeholder="Pincode" />
+                        <span asp-validation-for="ZipCode" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- 3. Specifications -->
+                <h4 class="text-secondary mb-3">🧱 Property Specifications</h4>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <label asp-for="BHK" class="form-label fw-semibold"></label>
+                        <select asp-for="BHK" class="form-select">
+                            <option value="">-- Select BHK --</option>
+                            <option value="0">1 RK</option>
+                            <option value="1">1 BHK</option>
+                            <option value="2">2 BHK</option>
+                            <option value="3">3 BHK</option>
+                            <option value="4">4 BHK</option>
+                            <option value="5">5 BHK</option>
+                        </select>
+                        <span asp-validation-for="BHK" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="Area" class="form-label fw-semibold"></label>
+                        <input asp-for="Area" class="form-control" placeholder="e.g. 1500 sq.ft" />
+                        <span asp-validation-for="Area" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="FurnishType" class="form-label fw-semibold"></label>
+                        <select asp-for="FurnishType" class="form-select">
+                            <option value="">-- Select Furnish Type --</option>
+                            <option>Fully Furnished</option>
+                            <option>Semi Furnished</option>
+                            <option>Unfurnished</option>
+                        </select>
+                        <span asp-validation-for="FurnishType" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- 4. Pricing -->
+                <h4 class="text-secondary mb-3">💰 Pricing</h4>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <label asp-for="Price" class="form-label fw-semibold"></label>
+                        <input asp-for="Price" class="form-control" placeholder="e.g. 25000 or 5000000" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="Type" class="form-label fw-semibold"></label>
+                        <select asp-for="Type" class="form-select">
+                            <option value="">-- Select Type --</option>
+                            <option>Rent</option>
+                            <option>Sale</option>
+                        </select>
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- 5. Media -->
+                <h4 class="text-secondary mb-3">🖼️ Media</h4>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Upload Image</label>
+                        <input type="file" name="ImageFile" id="ImageFile" class="form-control" accept="image/*" onchange="handleImageSelection()" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">OR Image URL</label>
+                        <input asp-for="ImageUrl" class="form-control" id="ImageUrl" placeholder="Enter image URL" oninput="handleImageSelection()" />
+                        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- 6. Metadata -->
+                <h4 class="text-secondary mb-3">🧾 Metadata</h4>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <label asp-for="OwnerId" class="form-label fw-semibold"></label>
+                        <input asp-for="OwnerId" class="form-control" placeholder="User ID" />
+                        <span asp-validation-for="OwnerId" class="text-danger"></span>
+                    </div>
+
+                    <input type="hidden" asp-for="PostedOn" value="@DateTime.Now" />
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-end mt-4">
+                    <a asp-action="Index" class="btn btn-outline-secondary me-3">
+                        <i class="bi bi-arrow-left"></i> Back
+                    </a>
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-check-circle-fill"></i> Post Property
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function handleImageSelection() {
+            const fileInput = document.getElementById("ImageFile");
+            const urlInput = document.getElementById("ImageUrl");
+
+            if (fileInput.files.length > 0) {
+                urlInput.disabled = true;
+                urlInput.value = "";
+            } else if (urlInput.value.trim() !== "") {
+                fileInput.disabled = true;
+            } else {
+                fileInput.disabled = false;
+                urlInput.disabled = false;
+            }
+        }
+
+        // Attach validation only to the "Post Property" form
+        const propertyForm = document.querySelector("#postPropertyForm");
+
+        if (propertyForm) {
+            propertyForm.addEventListener("submit", function (e) {
+                const fileInput = document.getElementById("ImageFile");
+                const urlInput = document.getElementById("ImageUrl");
+
+                if (fileInput.files.length === 0 && urlInput.value.trim() === "") {
+                    e.preventDefault();
+                    alert("Please upload an image or provide an image URL.");
+                }
+            });
+        }
+    </script>
 }

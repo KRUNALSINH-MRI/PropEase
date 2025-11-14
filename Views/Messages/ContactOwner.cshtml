@@ -1,0 +1,43 @@
+﻿@model PropEase.Models.PropertyMessage
+
+@{
+    ViewData["Title"] = "Contact Owner";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/contact_message.css" />
+
+</head>
+
+<link rel="stylesheet" href="~/css/contact_message.css" />
+
+<div class="contact-owner-section">
+    <div class="container">
+        <h2>Contact Property Owner</h2>
+
+        @if (ViewBag.Success != null)
+        {
+            <div class="alert alert-success text-center">@ViewBag.Success</div>
+        }
+
+        <form asp-action="ContactOwner" method="post" class="contact-owner-form">
+            <input type="hidden" asp-for="PropertyId" />
+            <input type="hidden" asp-for="OwnerId" />
+            <input type="hidden" asp-for="PropertyTitle" />
+
+
+            <div class="mb-3">
+                <label class="form-label">Property</label>
+                <input type="text" class="form-control" value="@Model.PropertyTitle" readonly />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Message" class="form-label">Your Message</label>
+                <textarea asp-for="Message" class="form-control" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+    </div>
+</div>
+

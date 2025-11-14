@@ -1,0 +1,109 @@
+﻿/* =========================
+   PERSONAL DATA PAGE STYLES
+   ========================= */
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 80px;
+    /* Adjust depending on navbar height (try 80–100px) */
+    /*background-color: #f8f9fa;*/ /* light neutral background */
+    /*font-family: 'Poppins', sans-serif;*/
+    color: #212529;
+}
+
+/* Page Title */
+h3 {
+    
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 25px;
+/*    border-bottom: 2px solid #007bff;*/
+    display: inline-block;
+    padding-bottom: 5px;
+    justify-content: center;
+    padding-left: 50px;
+}
+
+/* Page Container */
+.row {
+    padding-left: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 30px;
+}
+
+/* Info Column */
+.col-md-6 {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+    /* Paragraph Styling */
+    .col-md-6 p {
+        color: #555;
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    /* Strong Warning */
+    .col-md-6 strong {
+        color: #c0392b;
+    }
+
+/* Button Styles */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 10px 22px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+/* Download Button */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+/* Delete Button */
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+    .btn-danger:hover {
+        background-color: #b02a37;
+        transform: translateY(-2px);
+    }
+
+/* Delete Link Spacing */
+#delete {
+    margin-top: 10px;
+    display: inline-block;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .col-md-6 {
+        width: 90%;
+        padding: 25px 20px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+}

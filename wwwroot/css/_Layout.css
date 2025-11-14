@@ -1,0 +1,300 @@
+﻿/* ==============================
+   NAVBAR STYLING FOR _Layout.cshtml
+   ============================== */
+
+/* Navbar container */
+.navbar {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 10px 40px;
+    transition: all 0.3s ease;
+}
+
+/* Navbar links */
+.navbar-nav .nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+    margin-left: 25px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+    /* Underline animation on hover */
+    .navbar-nav .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 2px;
+        background: #ffeb3b;
+        transition: width 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover::after {
+        width: 100%;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #ffeb3b !important;
+        transform: scale(1.05);
+    }
+
+.nav-link {
+    white-space: nowrap; /* Prevents breaking into two lines */
+    display: inline-flex;
+    align-items: center;
+    gap: 6px; /* Adds a small gap between emoji and text */
+}
+
+
+
+/* Logout button */
+#logout {
+    color: #ffffff !important;
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    transition: color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+    #logout:hover {
+        color: #ffeb3b !important;
+        transform: scale(1.05);
+    }
+
+/* ==============================
+   POST PROPERTY BUTTON (GLOBAL)
+   ============================== */
+
+.btn-post-property {
+    background-color: #000; /* solid black background */
+    color: #fff; /* white text */
+    font-weight: 700; /* bold text */
+    border: none;
+    border-radius: 25px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap; /* prevent wrapping */
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+    /* Hover Effect */
+    .btn-post-property:hover {
+        background: linear-gradient(135deg, #6a11cb, #2575fc); /* theme gradient */
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+
+body {
+    padding-top: 56px; /* Adjust depending on navbar height (try 80–100px) */
+    background-color: #f8f9fa; /* light neutral background */
+    font-family: 'Poppins', sans-serif;
+    color: #212529;
+}
+
+/* ==============================
+   RESPONSIVE NAVBAR (MOBILE & TABLET)
+   ============================== */
+@media (max-width: 991px) {
+    .navbar {
+        padding: 10px 20px;
+    }
+
+    .navbar-toggler {
+        border: none;
+        background: transparent;
+    }
+
+    .navbar-toggler-icon {
+        filter: brightness(0) invert(1); /* Makes the icon white */
+    }
+
+    .navbar-collapse {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 10px;
+    }
+
+    .navbar-nav .nav-link {
+        white-space: nowrap;
+        padding: 0.5rem 0.75rem;
+        font-size: 1.1rem;
+    }
+
+    #logout {
+        display: block;
+        margin: 10px auto;
+    }
+
+    .btn-post-property {
+        margin: 10px auto;
+        display: block;
+    }
+}
+
+/* =========================
+   FOOTER SECTION STYLING (SLIM HEIGHT)
+   ========================= */
+
+.footer-section {
+    background: #000;
+    color: #fff;
+    padding: 30px 0 15px; /* reduced vertical height */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    animation: fadeInUp 1s ease-out;
+}
+
+/* Center the 3 footer columns neatly */
+.footer-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 40px; /* reduced from 60px */
+    padding: 0 40px; /* slightly reduced side padding */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ABOUT SECTION */
+.footer-about {
+    flex: 1;
+    min-width: 250px;
+    max-width: 320px;
+}
+
+    .footer-about h4 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 12px; /* reduced from 15px */
+        color: #00bfff;
+    }
+
+    .footer-about p {
+        line-height: 1.5; /* slightly tighter line spacing */
+        color: #ccc;
+    }
+
+/* QUICK LINKS SECTION */
+.footer-links {
+    flex: 1;
+    min-width: 200px;
+    max-width: 250px;
+}
+
+    .footer-links h5 {
+        margin-bottom: 12px;
+        color: #00bfff;
+        font-weight: 600;
+    }
+
+    .footer-links ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .footer-links ul li {
+            margin-bottom: 8px; /* reduced space between items */
+        }
+
+            .footer-links ul li a {
+                color: #fff;
+                text-decoration: none;
+                transition: color 0.3s ease, transform 0.2s ease;
+            }
+
+                .footer-links ul li a:hover {
+                    color: #00bfff;
+                    transform: translateX(4px);
+                }
+
+/* CONTACT SECTION */
+.footer-contact {
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+}
+
+    .footer-contact h5 {
+        margin-bottom: 12px;
+        color: #00bfff;
+        font-weight: 600;
+    }
+
+    .footer-contact p {
+        margin: 4px 0; /* tighter spacing */
+        color: #ccc;
+    }
+
+    .footer-contact i {
+        color: #00bfff;
+        margin-right: 8px;
+    }
+
+/* BOTTOM COPYRIGHT SECTION */
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 10px; /* reduced */
+    margin-top: 25px; /* reduced */
+    color: #888;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+/* Hover animation for all links */
+.footer-section a {
+    position: relative;
+}
+
+    .footer-section a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 0%;
+        height: 2px;
+        background-color: #00bfff;
+        transition: width 0.3s ease;
+    }
+
+    .footer-section a:hover::after {
+        width: 100%;
+    }
+
+/* Responsive design */
+@media (max-width: 992px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 25px; /* smaller vertical space on mobile */
+        padding: 0 20px;
+    }
+}
+
+/* Smooth fade-in animation */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

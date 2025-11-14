@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">🧭 Admin Dashboard</h2>
+
+    <!-- Overview Cards -->
+    <div class="row text-center mb-4">
+        <div class="col-md-3">
+            <div class="card p-3 shadow-sm">
+                <h5>Total Users</h5>
+                <h3>@ViewBag.TotalUsers</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3 shadow-sm">
+                <h5>Total Properties</h5>
+                <h3>@ViewBag.TotalProperties</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3 shadow-sm">
+                <h5>Owners</h5>
+                <h3>@ViewBag.TotalOwners</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3 shadow-sm">
+                <h5>Messages</h5>
+                <h3>@ViewBag.TotalMessages</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Properties -->
+    <div class="mt-4">
+        <h4>Recent Properties</h4>
+        <table class="table table-bordered">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Title</th>
+                    <th>Owner</th>
+                    <th>Created Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var prop in ViewBag.RecentProperties)
+                {
+                    <tr>
+                        <td>@prop.Title</td>
+                        <td>@(prop.Owner != null ? prop.Owner.FullName ?? prop.Owner.Email : "N/A")</td>
+                        <td>@prop.PostedOn.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Recent Messages -->
+    <div class="mt-5">
+        <h4>Recent Contact Messages</h4>
+        <table class="table table-bordered">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Received At</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var msg in ViewBag.RecentMessages)
+                {
+                    <tr>
+                        <td>@msg.Name</td>
+                        <td>@msg.Email</td>
+                        <td>@msg.Subject</td>
+                        <td>@msg.CreatedAt.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

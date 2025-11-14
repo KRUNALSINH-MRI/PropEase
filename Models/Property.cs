@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
@@ -7,37 +8,51 @@ namespace PropEase.Models
     public class Property
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public required string Title { get; set; }
+        // 1. Basic Details
+        [Required, StringLength(100)]
+        public string Title { get; set; }
+
+        [Required, StringLength(1000)]
+        public string Description { get; set; }
 
         [Required]
-        [StringLength(500)]
-        public required string Description { get; set; }
+        public string PropertyType { get; set; }
 
-        [Required]
+        // 2. Location Info
+        [Required] public string Address { get; set; }
+        [Required] public string City { get; set; }
+        [Required] public string State { get; set; }
+        [Required, StringLength(10)] public string ZipCode { get; set; }
+
+        // 3. Property Specifications
+        [Range(0, 20)] public int BHK { get; set; }
+        [Range(100, 100000)] public int Area { get; set; }
+        [Display(Name = "Furnish Type")] public string FurnishType { get; set; }
+
+        // 4. Pricing
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
         [Required]
-        [StringLength(100)]
-        public required string Location { get; set; }
+        public string Type { get; set; } // Rent or Sale
 
-        [Display(Name = "Property Type")]
-        public required string PropertyType { get; set; }
-
-        [Display(Name = "Image URL")]
+        // 5. Media
+        [Display(Name = "Property Image")]
         public string? ImageUrl { get; set; }
 
+        // 6. Metadata
+
         // 🔗 Relationship to User (Owner)
-        [ForeignKey("Owner")]
         public string? OwnerId { get; set; }
+        [ForeignKey("OwnerId")]
         public ApplicationUser? Owner { get; set; }
 
         // Date Added
         [Display(Name = "Listed On")]
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime PostedOn { get; set; } = DateTime.Now;
  
     }
 }

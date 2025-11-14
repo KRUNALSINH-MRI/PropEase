@@ -1,77 +1,161 @@
 ﻿@model IEnumerable<PropEase.Models.Property>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Properties";
+    var currentUserId = UserManager.GetUserId(User);
 }
 
-<h1>Index</h1>
+<head>
+    <link rel="stylesheet" href="~/css/IndexProperties.css" />
+</head>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PropertyType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Owner)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PropertyType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Owner.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+<div class="container mt-5">
+    <h2 class="fw-bold mb-4 text-center text-primary">Explore Properties</h2>
+
+    @if (User.IsInRole("Admin") || User.IsInRole("Owner"))
+    {
+        <div class="text-center mb-4">
+            <a asp-action="Create" class="btn btn-primary rounded-pill px-4">
+                ➕ Add New Property
+            </a>
+        </div>
+    }
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card shadow-lg border-0 rounded-4 h-100 property-card">
+                    <!-- Property Image -->
+                    <div class="position-relative">
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <img src="@item.ImageUrl" class="card-img-top rounded-top-4"
+                                 alt="Property Image" style="height:220px; object-fit:cover;">
+                        }
+                        else
+                        {
+                            <span>No Image</span>
+                        }
+                        <span class="position-absolute top-0 end-0 m-2 badge bg-primary rounded-pill px-3 py-2">
+                            @item.Type
+                        </span>
+                    </div>
+
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <!-- Property Title & Basic Info -->
+                        <div>
+                            <h5 class="card-title fw-bold mb-1">@item.Title</h5>
+                            <p class="text-muted mb-2 small">@item.Address, @item.City</p>
+
+                            <div class="mb-2">
+                                <span class="badge bg-secondary">@item.PropertyType</span>
+                                <span class="badge bg-info text-dark">@item.FurnishType</span>
+                                <span class="badge bg-success">@((item.BHK == 0) ? "1 RK" : $"{item.BHK} BHK")</span>
+                            </div>
+
+                            <p class="fw-semibold text-dark mb-0">
+                                ₹@item.Price.ToString("N0")
+                                <small class="text-muted">(@item.Area sq.ft)</small>
+                            </p>
+
+                            <p class="small text-muted mb-0">
+                                Listed on: <strong>@item.PostedOn.ToString("dd-MMM-yyyy")</strong>
+                            </p>
+                            <p class="small text-muted mb-2">
+                                Owner: @(item.Owner?.Email ?? "N/A")
+                            </p>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+
+                            <div class="property-actions d-flex align-items-center">
+
+                                @if (User.IsInRole("Admin") || User.IsInRole("Owner"))
+                                {
+                                    <td>
+                                        @* <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger rounded-pill px-3">Edit</a> | *@
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger rounded-pill px-3">🧾 Details</a>
+                                        @* <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger rounded-pill px-3">Delete</a> *@
+                                        <a asp-controller="Messages" asp-action="ContactOwner" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                            📩 Contact
+                                        </a>
+                                        <form asp-controller="Favorites" asp-action="ToggleFavorite" method="post" class="m-0 wishlist-form">
+                                            <input type="hidden" name="propertyId" value="@item.Id" />
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-wishlist rounded-pill px-3 btn-outline-danger"
+                                                    data-property-id="@item.Id">
+                                                ❤️ Add
+                                            </button>
+                                        </form>
+
+
+                                        
+                                    </td>
+                                }
+
+                                else
+                                {
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger rounded-pill px-3">🧾 Details</a>
+                                    <a asp-controller="Messages" asp-action="ContactOwner" asp-route-id="@item.Id"
+                                       class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                        📩 Contact
+                                    </a>
+                                    <form asp-controller="Favorites" asp-action="ToggleFavorite" method="post" class="m-0 wishlist-form">
+                                        <input type="hidden" name="propertyId" value="@item.Id" />
+                                        <button type="submit"
+                                                class="btn btn-sm btn-wishlist  btn-outline-danger rounded-pill px-3"
+                                                data-property-id="@item.Id">
+                                            ❤️ Add
+                                        </button>
+                                    </form>
+
+
+                                    
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const wishlistButtons = document.querySelectorAll(".wishlist-form button");
+
+            wishlistButtons.forEach(button => {
+                button.addEventListener("click", function (e) {
+                    e.preventDefault(); // prevent page reload for instant feedback
+
+                    const form = this.closest("form");
+                    const propertyId = this.getAttribute("data-property-id");
+                    const isActive = this.classList.toggle("active");
+
+                    // Toggle text
+                    if (isActive) {
+                        this.innerHTML = "❤️ Added";
+                    } else {
+                        this.innerHTML = "❤️ Add";
+                    }
+
+                    // Submit the form in background
+                    fetch(form.action, {
+                        method: form.method,
+                        body: new FormData(form)
+                    });
+                });
+            });
+        });
+    </script>
 }
-    </tbody>
-</table>
+
