@@ -6,20 +6,44 @@
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
-<h3>@ViewData["Title"]</h3>
 
-<div class="alert alert-warning" role="alert">
-    <p>
-        <strong>This action only disables 2FA.</strong>
-    </p>
-    <p>
-        Disabling 2FA does not change the keys used in authenticator apps. If you wish to change the key
-        used in an authenticator app you should <a asp-page="./ResetAuthenticator">reset your authenticator keys.</a>
-    </p>
-</div>
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
 
-<div>
-    <form method="post">
-        <button class="btn btn-danger" type="submit">Disable 2FA</button>
-    </form>
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4 text-center">
+                    <h4 class="mb-3">
+                        <i class="bi bi-shield-lock-fill me-2"></i>@ViewData["Title"]
+                    </h4>
+
+                    <!-- Improved Alert -->
+                    <div class="alert alert-warning border-0 rounded-3 shadow-sm text-start" role="alert">
+                        <div class="d-flex align-items-start">
+                            <i class="bi bi-exclamation-triangle-fill fs-3 me-3"></i>
+                            <div>
+                                <strong class="d-block mb-1">This action only disables 2FA.</strong>
+                                <p class="mb-1">
+                                    Disabling 2FA does <strong>not</strong> reset your authenticator app keys.
+                                </p>
+                                <p class="mb-0">
+                                    If you want to change the app key, you should
+                                    <a asp-page="./ResetAuthenticator" class="fw-semibold">reset your authenticator key</a>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Centered Button -->
+                    <form method="post" class="mt-4">
+                        <button class="btn btn-danger px-4 py-2 rounded-3 shadow-sm" type="submit">
+                            Disable 2FA
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>

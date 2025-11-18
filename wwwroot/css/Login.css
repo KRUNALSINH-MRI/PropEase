@@ -215,3 +215,22 @@ label {
         padding: 10px;
     }
 }
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    opacity: 0.6;
+}
+
+    .toggle-password:hover {
+        opacity: 1;
+    }
+
+.password-input {
+    padding-right: 40px !important;
+}
+

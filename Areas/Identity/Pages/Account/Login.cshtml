@@ -28,6 +28,7 @@
                     <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="" />
                     <label asp-for="Input.Password" class="form-label">Password</label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    @* <span class="toggle-password" onclick="togglePassword(this)">👁️</span> *@
                 </div>
                 <div class="checkbox mb-3">
                     <label asp-for="Input.RememberMe" class="form-label">
@@ -81,4 +82,17 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        function togglePassword(icon) {
+            let input = icon.parentElement.querySelector(".password-input");
+            if (input.type === "password") {
+                input.type = "text";
+                icon.textContent = "🙈"; // icon when visible
+            } else {
+                input.type = "password";
+                icon.textContent = "👁️"; // icon when hidden
+            }
+        }
+    </script>
+
 }

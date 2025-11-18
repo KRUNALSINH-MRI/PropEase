@@ -30,11 +30,13 @@
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label asp-for="Input.Password">Password</label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
+                @* <span class="toggle-password" onclick="togglePassword(this)">👁️</span> *@
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label asp-for="Input.ConfirmPassword">Confirm Password</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                @* <span class="toggle-password" onclick="togglePassword(this)">👁️</span> *@
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="tel" aria-required="true" placeholder="mobile number" />
@@ -116,6 +118,18 @@
                         window.location.href = "/Identity/Account/Login";
                     });
                 </text>
+        }
+    </script>
+    <script>
+        function togglePassword(icon) {
+            let input = icon.parentElement.querySelector(".password-input");
+            if (input.type === "password") {
+                input.type = "text";
+                icon.textContent = "🙈"; // icon when visible
+            } else {
+                input.type = "password";
+                icon.textContent = "👁️"; // icon when hidden
+            }
         }
     </script>
 

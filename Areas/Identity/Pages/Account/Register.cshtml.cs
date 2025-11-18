@@ -79,7 +79,7 @@ namespace PropEase.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            [Required(ErrorMessage = "Mobile number is required")]
+            [Required(ErrorMessage = "The Mobile number is required")]
             [Phone(ErrorMessage = "Please enter a valid mobile number")]
             [Display(Name = "Mobile Number")]
             public string PhoneNumber { get; set; }

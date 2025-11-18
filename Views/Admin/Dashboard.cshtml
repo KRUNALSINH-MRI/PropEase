@@ -7,31 +7,95 @@
 
     <!-- Overview Cards -->
     <div class="row text-center mb-4">
+
         <div class="col-md-3">
-            <div class="card p-3 shadow-sm">
+            <div class="card p-3 shadow-sm dashboard-card" onclick="toggleSection('users')">
                 <h5>Total Users</h5>
                 <h3>@ViewBag.TotalUsers</h3>
             </div>
         </div>
+
         <div class="col-md-3">
-            <div class="card p-3 shadow-sm">
+            <div class="card p-3 shadow-sm dashboard-card" onclick="toggleSection('properties')">
                 <h5>Total Properties</h5>
                 <h3>@ViewBag.TotalProperties</h3>
             </div>
         </div>
+
         <div class="col-md-3">
-            <div class="card p-3 shadow-sm">
+            <div class="card p-3 shadow-sm dashboard-card" onclick="toggleSection('owners')">
                 <h5>Owners</h5>
                 <h3>@ViewBag.TotalOwners</h3>
             </div>
         </div>
+
         <div class="col-md-3">
-            <div class="card p-3 shadow-sm">
+            <div class="card p-3 shadow-sm dashboard-card" onclick="toggleSection('messages')">
                 <h5>Messages</h5>
                 <h3>@ViewBag.TotalMessages</h3>
             </div>
         </div>
+
     </div>
+
+    <div id="users-section" class="toggle-section" style="display:none;">
+        <h4>All Users</h4>
+        <table class="table table-bordered">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+            <tbody id="users-table"></tbody>
+        </table>
+    </div>
+
+    <div id="owners-section" class="toggle-section" style="display:none;">
+        <h4>All Owners</h4>
+        <table class="table table-bordered">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+            <tbody id="owners-table"></tbody>
+        </table>
+    </div>
+
+    <div id="properties-section" class="toggle-section" style="display:none;">
+        <h4>All Properties</h4>
+        <table class="table table-bordered">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Title</th>
+                    <th>Owner</th>
+                    <th>Created Date</th>
+                </tr>
+            </thead>
+            <tbody id="properties-table"></tbody>
+        </table>
+    </div>
+
+    <div id="messages-section" class="toggle-section" style="display:none;">
+        <h4>All Messages</h4>
+        <table class="table table-bordered">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Received At</th>
+                </tr>
+            </thead>
+            <tbody id="messages-table"></tbody>
+        </table>
+    </div>
+
+
 
     <!-- Recent Properties -->
     <div class="mt-4">
@@ -83,3 +147,47 @@
         </table>
     </div>
 </div>
+
+<script>
+
+    function toggleSection(type) {
+
+        const sectionId = type + "-section";
+        const section = document.getElementById(sectionId);
+
+        // Toggle visibility
+        if (section.style.display === "none") {
+            section.style.display = "block";
+            loadData(type);
+        } else {
+            section.style.display = "none";
+        }
+    }
+
+    function loadData(type) {
+        fetch(`/Admin/Get${capitalize(type)}`)
+            .then(res => res.json())
+            .then(data => {
+                let tableId = type + "-table";
+                let tbody = document.getElementById(tableId);
+                tbody.innerHTML = "";
+
+                data.forEach(item => {
+                    let row = "<tr>";
+
+                    Object.values(item).forEach(v => {
+                        row += `<td>${v}</td>`;
+                    });
+
+                    row += "</tr>";
+                    tbody.innerHTML += row;
+                });
+            });
+    }
+
+    function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+</script>
+
