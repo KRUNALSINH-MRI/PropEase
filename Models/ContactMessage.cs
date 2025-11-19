@@ -27,5 +27,8 @@ namespace PropEase.Models
 
         [BindNever]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        //// ✅ Add this navigation property
+        //public Property Property { get; set; }
     }
 }

@@ -1,0 +1,142 @@
+﻿@{
+    ViewData["Title"] = "Owner Dashboard";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">🏠 Owner Dashboard</h2>
+
+    <div class="row text-center mb-4">
+
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm dashboard-card" onclick="toggleSection('properties')">
+                <h5>Total Properties Listed</h5>
+                <h3>@ViewBag.TotalProperties</h3>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm dashboard-card" onclick="toggleSection('messages')">
+                <h5>Messages Received</h5>
+                <h3>@ViewBag.TotalMessages</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PROPERTIES SECTION -->
+    <div id="properties-section" class="toggle-section" style="display:none;">
+        <h4>Your Properties</h4>
+        <table class="table table-bordered">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Title</th>
+                    <th>Posted On</th>
+                </tr>
+            </thead>
+            <tbody id="properties-table"></tbody>
+        </table>
+    </div>
+
+    <!-- MESSAGES SECTION -->
+    <div id="messages-section" class="toggle-section" style="display:none;">
+        <h4>Your Messages</h4>
+        <table class="table table-bordered">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Property</th>
+                    <th>Message</th>
+                    <th>Sent On</th>
+                </tr>
+            </thead>
+            <tbody id="messages-table"></tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- Recent Properties (Owner Only) -->
+<div class="mt-4">
+    <h4>Recent Properties</h4>
+    <table class="table table-bordered">
+        <thead class="table-secondary">
+            <tr>
+                <th>Title</th>
+                <th>Posted On</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prop in ViewBag.RecentMyProperties)
+            {
+                <tr>
+                    <td>@prop.Title</td>
+                    <td>@prop.PostedOn.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Recent Messages (Owner Only) -->
+<div class="mt-5">
+    <h4>Recent Messages</h4>
+    <table class="table table-bordered">
+        <thead class="table-secondary">
+            <tr>
+                <th>Property</th>
+                <th>Message</th>
+                <th>Sent On</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var msg in ViewBag.RecentMyMessages)
+            {
+                <tr>
+                    <td>@msg.PropertyTitle</td>
+                    <td>@msg.Message</td>
+                    <td>@msg.SentOn.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+
+    function toggleSection(type) {
+
+        const sectionId = type + "-section";
+        const section = document.getElementById(sectionId);
+
+        // show/hide
+        if (section.style.display === "none") {
+            section.style.display = "block";
+            loadData(type);
+        } else {
+            section.style.display = "none";
+        }
+    }
+
+    function loadData(type) {
+
+        fetch(`/Owner/Get${capitalize(type)}`)
+            .then(res => res.json())
+            .then(data => {
+                let tbody = document.getElementById(type + "-table");
+                tbody.innerHTML = "";
+
+                data.forEach(item => {
+                    let row = "<tr>";
+                    Object.values(item).forEach(v => row += `<td>${v}</td>`);
+                    row += "</tr>";
+
+                    tbody.innerHTML += row;
+                });
+            });
+    }
+
+    function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+</script>
