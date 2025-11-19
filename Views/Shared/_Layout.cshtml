@@ -19,30 +19,42 @@
 <body>
     @{
         var currentPage = ViewContext.RouteData.Values["Page"]?.ToString();
-    } 
+    }
     @if (currentPage != "/Account/Register" && currentPage != "/Account/Login")
     {
         <!-- Navigation bar -->
         <header>
-            <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" style="background: linear-gradient(135deg, #6a11cb, #2575fc);">
+            <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm"
+                 style="background: linear-gradient(135deg, #6a11cb, #2575fc);">
 
-            <div class="container-fluid">
-                <a class="navbar-brand fw-bold text-white" asp-area="" asp-controller="Home" asp-action="Index">PropEase</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarMain">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-controller="Properties" asp-action="Index">Properties</a>
-                        </li>
+                <div class="container-fluid">
+
+                    <!-- Brand -->
+                    <a class="navbar-brand fw-bold text-white" asp-controller="Home" asp-action="Index">
+                        PropEase
+                    </a>
+
+                    <!-- Hamburger -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Full Navbar -->
+                    <div class="collapse navbar-collapse" id="mainNavbar">
+
+                        <!-- LEFT MENU -->
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Properties" asp-action="Index">Properties</a>
+                            </li>
+
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Admin" asp-action="Dashboard">Dashboard</a>
+                                    <a class="nav-link text-white" asp-controller="Admin" asp-action="Dashboard">Dashboard</a>
                                 </li>
                             }
+
                             @if (User.IsInRole("Owner"))
                             {
                                 <li class="nav-item">
@@ -51,24 +63,24 @@
                             }
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Contact" asp-action="Index">Contact</a>
+                                <a class="nav-link text-white" asp-controller="Contact" asp-action="Index">Contact</a>
                             </li>
+                        </ul>
 
+                        <!-- RIGHT MENU (from _LoginPartial merged here) -->
+                        <ul class="navbar-nav ms-auto">
+                            <partial name="_LoginPartial" />
+                        </ul>
 
-                    </ul>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <partial name="_LoginPartial" />
-            </div>
-        </nav>
-    </header>
-    }
-    
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+            </nav>
+        </header>
 
+    }
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
 
 
 
@@ -118,3 +130,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
