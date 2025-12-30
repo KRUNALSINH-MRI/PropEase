@@ -20,13 +20,13 @@
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
                         <label asp-for="Title" class="form-label fw-semibold"></label>
-                        <input asp-for="Title" class="form-control" />
+                        <input asp-for="Title" class="form-control" placeholder="Enter property title" />
                         <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
 
                     <div class="col-md-6">
                         <label asp-for="Description" class="form-label fw-semibold"></label>
-                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <textarea asp-for="Description" class="form-control" placeholder="Describe the property..."></textarea>
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
 
@@ -50,25 +50,25 @@
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
                         <label asp-for="Address" class="form-label fw-semibold"></label>
-                        <input asp-for="Address" class="form-control" />
+                        <input asp-for="Address" class="form-control" placeholder="Enter address" />
                         <span asp-validation-for="Address" class="text-danger"></span>
                     </div>
 
                     <div class="col-md-3">
                         <label asp-for="City" class="form-label fw-semibold"></label>
-                        <input asp-for="City" class="form-control" />
+                        <input asp-for="City" class="form-control" placeholder="City" />
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
 
                     <div class="col-md-3">
                         <label asp-for="State" class="form-label fw-semibold"></label>
-                        <input asp-for="State" class="form-control" />
+                        <input asp-for="State" class="form-control" placeholder="State" />
                         <span asp-validation-for="State" class="text-danger"></span>
                     </div>
 
                     <div class="col-md-3">
                         <label asp-for="ZipCode" class="form-label fw-semibold"></label>
-                        <input asp-for="ZipCode" class="form-control" />
+                        <input asp-for="ZipCode" class="form-control" placeholder="Pincode" />
                         <span asp-validation-for="ZipCode" class="text-danger"></span>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
 
                     <div class="col-md-3">
                         <label asp-for="Area" class="form-label fw-semibold"></label>
-                        <input asp-for="Area" class="form-control" />
+                        <input asp-for="Area" class="form-control" placeholder="e.g. 1500 sq.ft" />
                         <span asp-validation-for="Area" class="text-danger"></span>
                     </div>
 
@@ -114,7 +114,7 @@
                 <div class="row g-3 mb-4">
                     <div class="col-md-4">
                         <label asp-for="Price" class="form-label fw-semibold"></label>
-                        <input asp-for="Price" class="form-control" />
+                        <input asp-for="Price" class="form-control" placeholder="e.g. 25000 or 5000000" />
                         <span asp-validation-for="Price" class="text-danger"></span>
                     </div>
 

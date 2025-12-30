@@ -63,7 +63,7 @@
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
             <p class="signup-text">
                 Already have an account?
-                <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Login</a>
+                <a id="loginLink" asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Login</a>
             </p>
         </form>
     </div>
